@@ -1,4 +1,4 @@
-/**Ejercicio 1
+/** Enunciado Ejercicio 1
 Crea un archivo ejercicio1.js que tenga un objeto usuario con los siguientes campos:
 - Nombre (el tuyo o inventado)
 - Apellidos (el tuyo o inventado)
@@ -8,6 +8,7 @@ de inicio de cada módulo. Fecha en formato “YYYY-MM-DD”
 En este archivo queremos mostrar por pantalla la fecha de inicio del módulo de react del
 objeto que hemos creado anteriormente. */
 
+// Creo objeto usuario:
 const usuario = {
     nombre: 'Antonio',
     apellido1: 'Pérez',
@@ -28,13 +29,41 @@ const usuario = {
         }
     ]
 };
-const buscaAsignatura = usuario.asignaturas;
+
+// Creo una variable para definir la asignatura que se quiere buscar. No uso prompt para evitar errores.
 let asignaturaBuscada = 'Fundamentos REACT';
 
+// Solución con bucle directamente:
+console.log('Solución con bucle for... in:');
+
+const buscaAsignatura = usuario.asignaturas;
+let exito = false;
+
 for (let asig in buscaAsignatura) {
-    if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada))
-        console.log(`La fecha de inicio de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}`);
+    if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada)) {
+        console.log(`La fecha de inicio de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
+        exito = true;
+    }
 }
+if (!exito) {
+    console.log(`La asignatura ${asignaturaBuscada} no está registrada.`)
+}
+// Solución con función:
+console.log('-------------------------------');
+console.log('Solución con función:');
+
+const buscaAsignaturaEnObjeto = (usuarioAsignaturas, materia) => {
+    let datosDelObjeto = usuarioAsignaturas;
+    let moduloClase = materia;
+    for (let dato in datosDelObjeto) {
+        if (datosDelObjeto[dato].titulo.includes(moduloClase)) {
+            return console.log(`La fecha de inicio de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`)
+        }
+    }
+    console.log(`La asignatura ${moduloClase} no está registrada.`)
+};
+
+let mostrarEnPantalla = buscaAsignaturaEnObjeto(usuario.asignaturas, asignaturaBuscada);
 
 /*Aquí puedo ver la ficha completa del usuario creado, aunque no es lo que pide el ejercicio.
 let fichaUsuario = `
