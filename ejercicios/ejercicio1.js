@@ -8,31 +8,8 @@ de inicio de cada módulo. Fecha en formato “YYYY-MM-DD”
 En este archivo queremos mostrar por pantalla la fecha de inicio del módulo de react del
 objeto que hemos creado anteriormente. */
 
-/*const usuario = {
-    nombre: 'Pedro',
-    apellido1: 'Pérez',
-    apellido2: 'Sánchez',
-    busquedaEmpleo: true,
-    asignaturas: [
-        ['Git', '2023-11-28'],
-        ['Desarrollo Backend con Node.js', '2024-02-12'],
-        ['Fundamentos REACT', '2024-04-15'],
-    ]
-};*/
-
-/*let fichaUsuario = `
-Nombre: ${usuario.nombre}
-Apellidos: ${usuario.apellido1} ${usuario.apellido2}
-Asignaturas en curso:
-\t${usuario.asignaturas[0][0]}
-\t${usuario.asignaturas[1][0]}
-\t${usuario.asignaturas[2][0]}
-¿En búsqueda de empleo?: ${usuario.busquedaEmpleo ? 'Sí' : 'No'}
-Fecha de inicio del módulo REACT: ${usuario.asignaturas[2][1]}
-`*/
-
 const usuario = {
-    nombre: 'Pedro',
+    nombre: 'Antonio',
     apellido1: 'Pérez',
     apellido2: 'Sánchez',
     busquedaEmpleo: true,
@@ -58,10 +35,9 @@ for (let asig in buscaAsignatura) {
     if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada))
         console.log(`La fecha de inicio de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}`);
 }
-//console.log(usuario.asignaturas[2].titulo);
-//console.log(usuario.asignaturas.entries);
 
-/*let fichaUsuario = `
+/*Aquí puedo ver la ficha completa del usuario creado, aunque no es lo que pide el ejercicio.
+let fichaUsuario = `
 Nombre: ${usuario.nombre}
 Apellidos: ${usuario.apellido1} ${usuario.apellido2}
 Asignaturas en curso:
