@@ -48,7 +48,7 @@ for (let asig in buscaAsignatura) {
 if (!exito) {
     console.log(`La asignatura ${asignaturaBuscada} no está registrada.`)
 }
-// Solución con función:
+// Solución hecha con función:
 console.log('-------------------------------');
 console.log('Solución con función:');
 
