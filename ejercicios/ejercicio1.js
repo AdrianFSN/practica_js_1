@@ -52,7 +52,8 @@ for (let asig in buscaAsignatura) {
     }
 }
 if (!exito) {
-    console.log(`La asignatura ${asignaturaBuscada} no está registrada.`)
+    console.log(`La asignatura ${asignaturaBuscada} no está registrada.
+Revisa que la has escrito correctamente.`)
 }
 // Solución hecha con función flecha y bucle for... in:
 console.log('-------------------------------');
@@ -61,18 +62,20 @@ console.log('Solución con función flecha y bucle for... in:');
 const buscaAsignaturaEnObjeto = (usuarioAsignaturas, materia) => {
     let datosDelObjeto = usuarioAsignaturas;
     let moduloClase = materia;
-    if (moduloClase === '') {
+    if (moduloClase !== '') {
+        for (let dato in datosDelObjeto) {
+            if (datosDelObjeto[dato].titulo.includes(moduloClase)) {
+                return console.log(`La fecha de inicio del módulo de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`);
+            };
+        }
+        console.log(`La asignatura ${moduloClase} no está registrada.
+Revisa que la has escrito correctamente`);
+    } else {
         console.log('No has introducido ninguna asignatura');
-    };
-    for (let dato in datosDelObjeto) {
-        if (datosDelObjeto[dato].titulo.includes(moduloClase)) {
-            return console.log(`La fecha de inicio del módulo de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`);
-        };
     }
-    console.log(`La asignatura ${moduloClase} no está registrada.`)
+
+
 };
-
-
 
 let mostrarEnPantalla = buscaAsignaturaEnObjeto(usuario.asignaturas, asignaturaBuscada);
 
@@ -94,7 +97,8 @@ const buscaAsignaturaEnObjetoBis = (usuarioAsignaturas, materia) => {
         console.log('No has introducido ninguna asignatura')
     }
     else {
-        console.log(`La asignatura ${moduloClase} no está registrada.`)
+        console.log(`La asignatura ${moduloClase} no está registrada.
+Revisa que la has escrito correctamente`);
     }
 
 };
