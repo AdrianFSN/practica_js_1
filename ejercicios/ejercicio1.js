@@ -43,27 +43,36 @@ Por favor, indica la asignatura de la que quieres saber la fecha de inicio de su
     - Fundamentos REACT
 `);
 
+if (asignaturaBuscada === null) {
+    asignaturaBuscada = ''
+    console.log(`ATENCIÓN: Has decidido cancelar la consulta.
+Recarga la página si cambias de idea.`);
+    console.log('-------------------------------');
+};
+
+
 //-----------------------------------------------
-// Solución 1:  con bucle directamente:
+// Solución 1: con bucle directamente:
 
 console.log('Solución 1: con bucle for... in:');
 
 const buscaAsignatura = usuario.asignaturas;
 let exito = false;
+let salir = false
 
-if (asignaturaBuscada !== '') {
+if (asignaturaBuscada.trim() !== '') {
     for (let asig in buscaAsignatura) {
         if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada)) {
             console.log(`La fecha de inicio del módulo de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
             exito = true;
-        }
+        };
     }
     if (!exito) {
         console.log(`La asignatura ${asignaturaBuscada} no está registrada.
 Revisa que la has escrito correctamente.`)
     };
 } else {
-    console.log('No has introducido ninguna asignatura');
+    console.log('No has introducido ninguna asignatura.');
 };
 
 //-----------------------------------------------
@@ -75,17 +84,18 @@ console.log('Solución 2: con función flecha y bucle for... in:');
 const buscaAsignaturaEnObjeto = (usuarioAsignaturas, materia) => {
     let datosDelObjeto = usuarioAsignaturas;
     let moduloClase = materia;
-    if (moduloClase !== '') {
+
+    if (moduloClase.trim() !== '') {
         for (let dato in datosDelObjeto) {
             if (datosDelObjeto[dato].titulo.includes(moduloClase)) {
                 return console.log(`La fecha de inicio del módulo de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`);
             };
         }
         console.log(`La asignatura ${moduloClase} no está registrada.
-Revisa que la has escrito correctamente`);
+Revisa que la has escrito correctamente.`);
     } else {
-        console.log('No has introducido ninguna asignatura');
-    }
+        console.log('No has introducido ninguna asignatura.');
+    };
 
 
 };
@@ -107,13 +117,13 @@ const buscaAsignaturaEnObjetoBis = (usuarioAsignaturas, materia) => {
 
     if (materiaBuscada.length > 0) {
         console.log(`La fecha de inicio del módulo de ${moduloClase} es ${Object.values(materiaBuscada)}.`);
-    } else if (moduloClase === '') {
-        console.log('No has introducido ninguna asignatura')
+    } else if (moduloClase.trim() === '') {
+        console.log('No has introducido ninguna asignatura.');
     }
     else {
         console.log(`La asignatura ${moduloClase} no está registrada.
-Revisa que la has escrito correctamente`);
-    }
+Revisa que la has escrito correctamente.`);
+    };
 
 };
 
