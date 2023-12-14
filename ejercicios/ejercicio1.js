@@ -30,8 +30,14 @@ const usuario = {
     ]
 };
 
-// Creo una variable para definir la asignatura que se quiere buscar. No uso prompt para evitar errores.
-let asignaturaBuscada = 'Fundamentos REACT';
+// Creo una variable para pedir la asignatura que se quiere buscar.
+let asignaturaBuscada = prompt(`
+Por favor, indica la asignatura de la que quieres saber la fecha de inicio de su módulo:
+(Escribe su nombre tal y como aparece en la lista)
+    - Git
+    - Desarrollo Backend con Node.js
+    - Fundamentos REACT
+`);
 
 // Solución con bucle directamente:
 console.log('Solución con bucle for... in:');
@@ -41,29 +47,59 @@ let exito = false;
 
 for (let asig in buscaAsignatura) {
     if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada)) {
-        console.log(`La fecha de inicio de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
+        console.log(`La fecha de inicio del módulo de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
         exito = true;
     }
 }
 if (!exito) {
     console.log(`La asignatura ${asignaturaBuscada} no está registrada.`)
 }
-// Solución hecha con función:
+// Solución hecha con función flecha y bucle for... in:
 console.log('-------------------------------');
-console.log('Solución con función:');
+console.log('Solución con función flecha y bucle for... in:');
 
 const buscaAsignaturaEnObjeto = (usuarioAsignaturas, materia) => {
     let datosDelObjeto = usuarioAsignaturas;
     let moduloClase = materia;
+    if (moduloClase === '') {
+        console.log('No has introducido ninguna asignatura');
+    };
     for (let dato in datosDelObjeto) {
         if (datosDelObjeto[dato].titulo.includes(moduloClase)) {
-            return console.log(`La fecha de inicio de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`)
-        }
+            return console.log(`La fecha de inicio del módulo de ${moduloClase} es ${datosDelObjeto[dato].fechaInicio}.`);
+        };
     }
     console.log(`La asignatura ${moduloClase} no está registrada.`)
 };
 
+
+
 let mostrarEnPantalla = buscaAsignaturaEnObjeto(usuario.asignaturas, asignaturaBuscada);
+
+// Solución hecha con función flecha, filter y map:
+console.log('-------------------------------');
+console.log('Solución con función, filter y map:');
+
+const buscaAsignaturaEnObjetoBis = (usuarioAsignaturas, materia) => {
+    let datosDelObjeto = usuarioAsignaturas;
+    let moduloClase = materia;
+
+    const materiaBuscada = datosDelObjeto
+        .filter(elemento => elemento.titulo === moduloClase)
+        .map(date => date.fechaInicio);
+
+    if (materiaBuscada.length > 0) {
+        console.log(`La fecha de inicio del módulo de ${moduloClase} es ${Object.values(materiaBuscada)}.`);
+    } else if (moduloClase === '') {
+        console.log('No has introducido ninguna asignatura')
+    }
+    else {
+        console.log(`La asignatura ${moduloClase} no está registrada.`)
+    }
+
+};
+
+let mostrar = buscaAsignaturaEnObjetoBis(usuario.asignaturas, asignaturaBuscada);
 
 /*Aquí puedo ver la ficha completa del usuario creado, aunque no es lo que pide el ejercicio.
 let fichaUsuario = `
