@@ -8,7 +8,9 @@ de inicio de cada módulo. Fecha en formato “YYYY-MM-DD”
 En este archivo queremos mostrar por pantalla la fecha de inicio del módulo de react del
 objeto que hemos creado anteriormente. */
 
+//-----------------------------------------------
 // Creo objeto usuario:
+
 const usuario = {
     nombre: 'Antonio',
     apellido1: 'Pérez',
@@ -30,7 +32,9 @@ const usuario = {
     ]
 };
 
+//-----------------------------------------------
 // Creo una variable para pedir la asignatura que se quiere buscar.
+
 let asignaturaBuscada = prompt(`
 Por favor, indica la asignatura de la que quieres saber la fecha de inicio de su módulo:
 (Escribe su nombre tal y como aparece en la lista)
@@ -39,25 +43,34 @@ Por favor, indica la asignatura de la que quieres saber la fecha de inicio de su
     - Fundamentos REACT
 `);
 
-// Solución con bucle directamente:
-console.log('Solución con bucle for... in:');
+//-----------------------------------------------
+// Solución 1:  con bucle directamente:
+
+console.log('Solución 1: con bucle for... in:');
 
 const buscaAsignatura = usuario.asignaturas;
 let exito = false;
 
-for (let asig in buscaAsignatura) {
-    if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada)) {
-        console.log(`La fecha de inicio del módulo de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
-        exito = true;
+if (asignaturaBuscada !== '') {
+    for (let asig in buscaAsignatura) {
+        if (buscaAsignatura[asig].titulo.includes(asignaturaBuscada)) {
+            console.log(`La fecha de inicio del módulo de ${asignaturaBuscada} es ${buscaAsignatura[asig].fechaInicio}.`)
+            exito = true;
+        }
     }
-}
-if (!exito) {
-    console.log(`La asignatura ${asignaturaBuscada} no está registrada.
+    if (!exito) {
+        console.log(`La asignatura ${asignaturaBuscada} no está registrada.
 Revisa que la has escrito correctamente.`)
-}
-// Solución hecha con función flecha y bucle for... in:
+    };
+} else {
+    console.log('No has introducido ninguna asignatura');
+};
+
+//-----------------------------------------------
+// Solución 2: hecha con función flecha y bucle for... in:
+
 console.log('-------------------------------');
-console.log('Solución con función flecha y bucle for... in:');
+console.log('Solución 2: con función flecha y bucle for... in:');
 
 const buscaAsignaturaEnObjeto = (usuarioAsignaturas, materia) => {
     let datosDelObjeto = usuarioAsignaturas;
@@ -79,9 +92,10 @@ Revisa que la has escrito correctamente`);
 
 let mostrarEnPantalla = buscaAsignaturaEnObjeto(usuario.asignaturas, asignaturaBuscada);
 
-// Solución hecha con función flecha, filter y map:
+//-----------------------------------------------
+// Solución 3: hecha con función flecha, filter y map:
 console.log('-------------------------------');
-console.log('Solución con función, filter y map:');
+console.log('Solución 3: con función, filter y map:');
 
 const buscaAsignaturaEnObjetoBis = (usuarioAsignaturas, materia) => {
     let datosDelObjeto = usuarioAsignaturas;
@@ -105,6 +119,7 @@ Revisa que la has escrito correctamente`);
 
 let mostrar = buscaAsignaturaEnObjetoBis(usuario.asignaturas, asignaturaBuscada);
 
+//-----------------------------------------------
 /*Aquí puedo ver la ficha completa del usuario creado, aunque no es lo que pide el ejercicio.
 let fichaUsuario = `
 Nombre: ${usuario.nombre}
