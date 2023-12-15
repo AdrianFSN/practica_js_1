@@ -1,3 +1,8 @@
+/**Nuestro cliente tiene un array de datos y nos ha pedido que saquemos la siguiente
+información. El listado de los desarrolladores que tengan como habilidad “JavaScript” y el
+listado de los proyectos en el que sus desarrolladores trabajan.
+Estos son los datos: */
+
 const datos = [
     {
         id: 1,
@@ -28,18 +33,30 @@ const datos = [
     }
 ];
 
-// Solución ejercicio transformaciones lista 1:
+//Solución ejercicio transformaciones lista 1:
+console.log('Solución ejercicio transformaciones lista 1:');
 
-const desarrolladoresJavascript = [];
+let habilidadDemandada = 'JavaScript';
 
-for (let i = 0; i < datos.length; i++) {
-    if (datos[i].habilidades.includes('JavaScript')) {
-        desarrolladoresJavascript.push(datos[i]);
-    }
-}
-console.log(desarrolladoresJavascript);
+const filtroHabilidades = (habilidad) => {
+    let skill = habilidad;
+    const filtrado = datos
+        .filter((item) => (item.habilidades.includes(skill)))
+        .map(elemento => elemento.nombre);
+
+    console.log(`
+Del equipo de desarrolladores del cliente,
+esta es la lista de personas con la habilidad "${skill}":
+${filtrado}.
+    `);
+};
+
+filtroHabilidades(habilidadDemandada);
+
+console.log('-------------------------------');
 
 // Solución ejercicio transformaciones lista 2:
+console.log('Solución ejercicio transformaciones lista 2:')
 
 const nombresProyectos = [];
 
