@@ -47,7 +47,7 @@ const filtroHabilidades = (habilidad) => {
     console.log(`
 Del equipo de desarrolladores del cliente,
 esta es la lista de personas con la habilidad "${skill}":
-${filtrado}.
+${filtrado.join(', ')}.
     `);
 };
 
@@ -58,11 +58,33 @@ console.log('-------------------------------');
 // Solución ejercicio transformaciones lista 2:
 console.log('Solución ejercicio transformaciones lista 2:')
 
-const nombresProyectos = [];
+const filtroDesarrolladoresActivos = (lista) => {
+    let desarroladoresActivos = lista;
+    const filtradoActividad = ()
+
+};
+
+filtroDesarrolladoresActivos(datos)
+
+const filtroProyectos = (desarrollador) => {
+    let nombre = desarrollador;
+    const filtrado = datos
+        .filter(item => item.nombre === nombre)
+        .reduce((acum, elemento) => acum.concat(elemento.proyectos), [])
+        .map(item => item.nombre);
+
+    console.log(`
+Los proyectos en los que trabaja ${nombre} son: ${filtrado.join(', ')}.`);
+
+};
+
+filtroProyectos('Pedro');
+
+/**const nombresProyectos = [];
 
 for (let j = 0; j < datos.length; j++) {
     for (let h = 0; h < datos[j].proyectos.length; h++) {
         nombresProyectos.push(datos[j].proyectos[h].nombre)
     };
 }
-console.log(nombresProyectos);
+console.log(nombresProyectos);*/
