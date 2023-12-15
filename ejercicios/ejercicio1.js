@@ -133,23 +133,3 @@ Revisa que la has escrito correctamente.`);
 
     buscaAsignaturaEnObjetoBis(usuario.asignaturas, asignaturaBuscada);
 };
-
-
-
-//-----------------------------------------------
-/*Aquí puedo ver la ficha completa del usuario creado, aunque no es lo que pide el ejercicio.
-let fichaUsuario = `
-Nombre: ${usuario.nombre}
-Apellidos: ${usuario.apellido1} ${usuario.apellido2}
-Asignaturas en curso:
-\t${usuario.asignaturas[0][0]}
-\t${usuario.asignaturas[1][0]}
-\t${usuario.asignaturas[2][0]}
-¿En búsqueda de empleo?: ${usuario.busquedaEmpleo ? 'Sí' : 'No'}
-Fecha de inicio del módulo REACT: ${usuario.asignaturas[2][1]}
-`;
-
-console.log('Ficha completa del objeto usuario:');
-console.log(fichaUsuario);
-console.log('Respuesta concreta al ejercicio 1:');
-console.log(usuario.asignaturas[2][1]);*/
