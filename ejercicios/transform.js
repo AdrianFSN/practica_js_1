@@ -58,15 +58,27 @@ console.log('-------------------------------');
 // Solución ejercicio transformaciones lista 2:
 console.log('Solución ejercicio transformaciones lista 2:')
 
+const filtroProyectos = (desarrollador) => {
+    let nombre = desarrollador;
+    const filtrado = datos
+        .filter(item => item.nombre === nombre)
+        .reduce((acum, elemento) => acum.concat(elemento.proyectos), [])
+        .map(item => item.nombre);
+
+    console.log(`
+Los proyectos en los que trabaja ${nombre} son: ${filtrado.join(', ')}.`);
+
+};
+
 const filtroDesarrolladoresActivos = (lista) => {
     let desarroladoresActivos = lista;
-    const filtradoActividad = ()
-
+    desarroladoresActivos
+        .map(persona => filtroProyectos(persona.nombre));
 };
 
 filtroDesarrolladoresActivos(datos)
 
-const filtroProyectos = (desarrollador) => {
+/**const filtroProyectos = (desarrollador) => {
     let nombre = desarrollador;
     const filtrado = datos
         .filter(item => item.nombre === nombre)
