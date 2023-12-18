@@ -1,12 +1,6 @@
 /**Nuestro cliente tiene un array de datos y nos ha pedido que saquemos la siguiente
-<<<<<<< HEAD
 información.El listado de los desarrolladores que tengan como habilidad “JavaScript” y el
 listado de los proyectos en el que sus desarrolladores trabajan.*/
-=======
-información. El listado de los desarrolladores que tengan como habilidad “JavaScript” y el
-listado de los proyectos en el que sus desarrolladores trabajan.
-Estos son los datos: */
->>>>>>> da306ce56a374494074c55bef8e8f97847c8dab5
 
 const datos = [
     {
