@@ -1,3 +1,7 @@
+/**Nuestro cliente tiene un array de datos y nos ha pedido que saquemos la siguiente
+información.El listado de los desarrolladores que tengan como habilidad “JavaScript” y el
+listado de los proyectos en el que sus desarrolladores trabajan.*/
+
 const datos = [
     {
         id: 1,
@@ -29,23 +33,19 @@ const datos = [
 ];
 
 // Solución ejercicio transformaciones lista 1:
+console.log('-------------------------------');
+console.log('Solución ejercicio transformaciones lista 1');
 
-const desarrolladoresJavascript = [];
-
-for (let i = 0; i < datos.length; i++) {
-    if (datos[i].habilidades.includes('JavaScript')) {
-        desarrolladoresJavascript.push(datos[i]);
-    }
-}
+const desarrolladoresJavascript = datos
+    .filter(elemento => elemento.habilidades.includes('JavaScript'));
 console.log(desarrolladoresJavascript);
 
 // Solución ejercicio transformaciones lista 2:
+console.log('-------------------------------');
+console.log('Solución ejercicio transformaciones lista 2');
 
-const nombresProyectos = [];
-
-for (let j = 0; j < datos.length; j++) {
-    for (let h = 0; h < datos[j].proyectos.length; h++) {
-        nombresProyectos.push(datos[j].proyectos[h].nombre)
-    };
-}
+const nombresProyectos = datos
+    .map(elemento => elemento.proyectos
+        .map(proyecto => proyecto.nombre))
+    .reduce((acum, item) => acum.concat(item), []);
 console.log(nombresProyectos);
