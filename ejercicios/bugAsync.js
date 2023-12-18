@@ -16,8 +16,9 @@ const usuario = obtenerUsuario(1);
 console.log(usuario);*/
 
 // Este programa simula una llamada asincrónica para obtener un usuario
+
+console.log('Dos soluciones: con "promesa / then" y con "async / await".');
 console.log('-------------------------------');
-console.log('Solución 1: con promesa.');
 
 function obtenerUsuario(id) {
     return new Promise((resolve, reject) => {
@@ -30,10 +31,24 @@ function obtenerUsuario(id) {
         }, 2000);
     });
 }
+console.log('Cargando soluciones...');
+
+//Solución con promesa / then
 const usuario = obtenerUsuario(1)
     .then(usuario => {
-        console.log(usuario);
+        console.log('Este es el usuario buscado con "promesa / then"; ', usuario);
     })
     .catch(error => {
-        console.error(error.message);
+        console.error('Error "promesa / then": ', error.message);
     });
+
+// Solución con async / await
+console.log('-------------------------------');
+
+const main = async () => {
+    try {
+        let user = await obtenerUsuario(1);
+        console.log('Este es el usuario buscado con "async / await" :', user)
+    } catch (error) { console.error('Error "async / array": ', error.message) }
+};
+main()
