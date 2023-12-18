@@ -48,7 +48,7 @@ console.log('-------------------------------');
 const main = async () => {
     try {
         let user = await obtenerUsuario(1);
-        console.log('Este es el usuario buscado con "async / await" :', user)
-    } catch (error) { console.error('Error "async / array": ', error.message) }
+        console.log('Este es el usuario buscado con "async / await" :', user);
+    } catch (error) { console.error('Error "async / array": ', error.message) };
 };
-main()
+main();
