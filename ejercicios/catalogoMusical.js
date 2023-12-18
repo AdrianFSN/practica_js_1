@@ -30,14 +30,20 @@ const crearCatalogo = () => {
     let listaCanciones = [];
     let exit = false
     while (!exit) {
-        listaCanciones.push(crearCancion());
-        let continuar = prompt('¿Quieres añadir más canciones? (S, N)').toUpperCase();
-        if (continuar === 'S') {
-            console.log('Seguimos');
-        } else if (continuar === 'N') {
-            console.log('Paramos de agregar canciones');
-            exit = true;
-        } else { console.log('Solo puedes contestar S o N') };
+        let continuar = prompt('¿Quieres añadir una canción al catálogo? (S, N)')
+        if (continuar !== null) {
+            continuar = continuar.toUpperCase()
+            if (continuar === 'S') {
+                listaCanciones.push(crearCancion());
+            } else if (continuar === 'N') {
+                alert('Paramos de agregar canciones');
+                exit = true;
+            } else { console.log('Solo puedes contestar S o N') };
+        } else {
+            alert('Operación cancelada');
+            exit = true
+        };
+
     };
     return listaCanciones;
 };
