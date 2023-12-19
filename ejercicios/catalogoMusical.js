@@ -101,7 +101,7 @@ const objetoCatalogo = {
             duracionTotal: duracionCatalogo,
             duraccionMedia: duracionCatalogo / objetoCatalogo.listaCanciones.length
         };
-    }
+    },
 };
 
 const miCatalogo = objetoCatalogo;
