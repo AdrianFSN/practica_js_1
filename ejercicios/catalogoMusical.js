@@ -45,10 +45,10 @@ const objetoCatalogo = {
 
     ],
     sacarListaCanciones: listarCatalogo = () => {
-        const headers = ['TÍTULO', 'GÉNERO', 'DURACIÓN'];
+        const headers = ['TÍTULO'.padEnd(35), 'GÉNERO'.padEnd(20), 'DURACIÓN'].join(' ');
         let tablaCatalogo = [headers];
         objetoCatalogo.listaCanciones
-            .forEach(item => tablaCatalogo.push([item.titulo, item.genero, item.duracion]));
+            .forEach(item => tablaCatalogo.push([item.titulo.padEnd(35), item.genero.padEnd(20), item.duracion].join(' ')));
         return tablaCatalogo.join('\n');
 
     },
