@@ -60,9 +60,13 @@ const objetoCatalogo = {
             let cancion = {
                 titulo: prompt('Por favor, introduce el título de la canción'),
                 genero: prompt('Por favor, introduce el género de la canción'),
-                duracion: parseFloat(prompt('Por favor, introduce la duración de la canción (en número y en minutos.segundos)'), 10)
+                duracion: parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'), 10)
             };
+            while (isNaN(cancion.duracion)) {
+                cancion.duracion = parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'), 10);
+            }
             return cancion;
+
         };
 
         let exit = false
@@ -145,7 +149,7 @@ if (userChoice !== null) {
     if (userChoice === 'L') {
         console.log(miCatalogo.sacarListaCanciones());
     } else if (userChoice === 'A') {
-        console.log(miCatalogo.crearCatalogo());
+        miCatalogo.crearCatalogo();
     } else if (userChoice === 'G') {
         miCatalogo.filtrarXGenero();
     } else if (userChoice === 'M') {
