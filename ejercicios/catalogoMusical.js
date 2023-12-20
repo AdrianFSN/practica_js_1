@@ -14,6 +14,8 @@ Buscar Canciones por Género: Pide al usuario que ingrese un género y muestra e
 consola todas las canciones de ese género.
 Calcular Promedio de Duración: Calcula y muestra en la consola el promedio de la
 duración de todas las canciones en el catálogo. (opcional)*/
+const PADDING_TITULO = 35;
+const PADDING_GENERO = 20;
 
 const objetoCatalogo = {
     listaCanciones: [
@@ -44,11 +46,11 @@ const objetoCatalogo = {
         }
 
     ],
+    headers: ['TÍTULO'.padEnd(PADDING_TITULO), 'GÉNERO'.padEnd(PADDING_GENERO), 'DURACIÓN'].join(' '),
     sacarListaCanciones: listarCatalogo = () => {
-        const headers = ['TÍTULO'.padEnd(35), 'GÉNERO'.padEnd(20), 'DURACIÓN'].join(' ');
-        let tablaCatalogo = [headers];
+        let tablaCatalogo = [objetoCatalogo.headers];
         objetoCatalogo.listaCanciones
-            .forEach(item => tablaCatalogo.push([item.titulo.padEnd(35), item.genero.padEnd(20), item.duracion].join(' ')));
+            .forEach(item => tablaCatalogo.push([item.titulo.padEnd(PADDING_TITULO), item.genero.padEnd(PADDING_GENERO), item.duracion].join(' ')));
         return tablaCatalogo.join('\n');
 
     },
@@ -80,7 +82,18 @@ const objetoCatalogo = {
             };
 
         };
-        return objetoCatalogo.listaCanciones.concat(cancionesAñadidas);
+        cancionesAñadidas = objetoCatalogo.listaCanciones.concat(cancionesAñadidas);
+        const formatCancionesAñadidas = cancionesAñadidas
+            .map(item => [
+                item.titulo.padEnd(PADDING_TITULO),
+                item.genero.padEnd(PADDING_GENERO),
+                item.duracion
+            ]);
+        console.log(objetoCatalogo.headers)
+        formatCancionesAñadidas.forEach(item =>
+            console.log(item.join(' '))
+        );
+
     },
     filtrarXGenero: filtradoGenero = () => {
         let elegirGenero = prompt('Introduce el género musical por el que quieres filtrar');
@@ -88,7 +101,17 @@ const objetoCatalogo = {
             elegirGenero = elegirGenero.toLowerCase();
             const listaFiltrada = objetoCatalogo.listaCanciones
                 .filter(elemento => elemento.genero.toLowerCase() === elegirGenero);
-            if (listaFiltrada.length > 0 ? console.log(listaFiltrada) : alert('No hay resultados para tu búsqueda'));
+
+            console.log(objetoCatalogo.headers);
+            listaFiltrada.forEach(item => {
+                console.log(item.titulo.padEnd(PADDING_TITULO),
+                    item.genero.padEnd(PADDING_GENERO),
+                    item.duracion)
+            });
+
+            if (listaFiltrada.length === 0) {
+                alert('No hay resultados para tu búsqueda');
+            };
         } else {
             alert('Operación cancelada');
         };
@@ -124,7 +147,7 @@ if (userChoice !== null) {
     } else if (userChoice === 'A') {
         console.log(miCatalogo.crearCatalogo());
     } else if (userChoice === 'G') {
-        console.log(miCatalogo.filtrarXGenero());
+        miCatalogo.filtrarXGenero();
     } else if (userChoice === 'M') {
         console.log(miCatalogo.calcularMedia());
     } else {
