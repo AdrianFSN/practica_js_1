@@ -55,7 +55,7 @@ const objetoCatalogo = {
 
         let segundos = duracion % 60;
 
-        return `${minutoLimpio} min ${segundos} s`
+        return `${minutoLimpio} min ${parseInt(segundos)} s`
     },
 
     sacarListaCanciones: listarCatalogo = () => {
@@ -137,7 +137,7 @@ const objetoCatalogo = {
             listaFiltrada.forEach(item => {
                 console.log(item.titulo.padEnd(PADDING_TITULO),
                     item.genero.padEnd(PADDING_GENERO),
-                    item.duracion)
+                    objetoCatalogo.mostrarMinutoSegundo(item.duracion))
             });
 
             if (listaFiltrada.length === 0) {
@@ -151,10 +151,11 @@ const objetoCatalogo = {
         const duracionCatalogo = objetoCatalogo.listaCanciones
             .reduce((acum, item) =>
                 (acum += item.duracion), 0);
-        return {
-            duracionTotal: duracionCatalogo,
-            duraccionMedia: duracionCatalogo / objetoCatalogo.listaCanciones.length
-        };
+        const media = duracionCatalogo / objetoCatalogo.listaCanciones.length;
+        let resultado = objetoCatalogo.mostrarMinutoSegundo(media);
+        return `
+Duración del catálogo: ${objetoCatalogo.mostrarMinutoSegundo(duracionCatalogo)}
+Duración media de las canciones del catálogo: ${resultado}`;
     },
 };
 
