@@ -69,7 +69,6 @@ const objetoCatalogo = {
     },
 
     crearCatalogo: llenarCatalogo = () => {
-        let cancionesAñadidas = [];
         const crearCancion = () => {
             let cancion = {
                 titulo: prompt('Por favor, introduce el título de la canción'),
@@ -93,7 +92,7 @@ const objetoCatalogo = {
             if (continuar !== null) {
                 continuar = continuar.toUpperCase()
                 if (continuar === 'S') {
-                    cancionesAñadidas.push(crearCancion());
+                    objetoCatalogo.listaCanciones.push(crearCancion());
                 } else if (continuar === 'N') {
                     alert('Paramos de agregar canciones');
                     exit = true;
@@ -104,8 +103,8 @@ const objetoCatalogo = {
             };
 
         };
-        cancionesAñadidas = objetoCatalogo.listaCanciones.concat(cancionesAñadidas);
-        const formatCancionesAñadidas = cancionesAñadidas
+
+        const formatCancionesAñadidas = objetoCatalogo.listaCanciones
             .map(item => [
                 item.titulo.padEnd(PADDING_TITULO),
                 item.genero.padEnd(PADDING_GENERO),
