@@ -65,18 +65,24 @@ const objetoCatalogo = {
             let duracionString = cancion.duracion.toString();
 
             const separarSegundos = (duracion) => {
-                const partes = duracion.toString().split('.');
-                let segundos = partes[1];
-                console.log(segundos.length)
-                if (segundos.length >= 2) {
-                    segundos = parseInt(segundos, 10);
-                    return segundos >= 60;
-                } else if (segundos.length < 2) {
-                    return segundos >= 6;
-                };
+                let partes = duracion.toString();
+                if (!partes.includes('.')) {
+                    partes = parseInt(partes)
+                } else {
+                    partes = partes.split('.');
+                    let segundos = partes[1];
+                    if (segundos.length >= 2) {
+                        segundos = parseInt(segundos, 10);
+                        return segundos >= 60;
+                    } else if (segundos.length < 2) {
+                        return segundos >= 6;
+                    };
+
+                }
+
             };
 
-            while (isNaN(cancion.duracion) || separarSegundos(cancion.duracion)) {
+            while (cancion.duracion < 0 || isNaN(cancion.duracion) || separarSegundos(cancion.duracion)) {
                 cancion.duracion = parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'), 10);
                 separarSegundos(cancion.duracion)
             };
