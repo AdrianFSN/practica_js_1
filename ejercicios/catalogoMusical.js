@@ -52,10 +52,8 @@ const objetoCatalogo = {
         let minutos = duracion / 60;
         minutos = minutos.toString().split('.');
         let minutoLimpio = minutos[0];
-        console.log(minutoLimpio);
 
         let segundos = duracion % 60;
-        console.log(segundos);
 
         return `${minutoLimpio} min ${segundos} s`
     },
@@ -73,13 +71,24 @@ const objetoCatalogo = {
             let cancion = {
                 titulo: prompt('Por favor, introduce el título de la canción'),
                 genero: prompt('Por favor, introduce el género de la canción'),
-                duracion: parseInt(prompt('Por favor, introduce la duración de la canción en segundos'))
+                duracion: prompt('Por favor, introduce la duración de la canción en segundos').trim()
             };
-            console.log(cancion.duracion, typeof cancion.duracion)
 
-            while (cancion.duracion < 0 || isNaN(cancion.duracion)) {
-                cancion.duracion = parseInt(prompt('Por favor, introduce la duración de la canción en segundos'));
-                //calcularMinutos(cancion.duracion);
+            let salir = false;
+            while (!salir) {
+                if (cancion.duracion.length <= 0 || isNaN(cancion.duracion) || cancion.duracion.includes('.')) {
+                    cancion.duracion = prompt('Por favor, introduce la duración de la canción en segundos');
+                } else {
+                    try {
+                        cancion.duracion = parseInt(cancion.duracion);
+                        if (!isNaN(cancion.duracion)) {
+                            salir = true
+                        }
+                    } catch (error) {
+                        cancion.duracion = prompt('ERROR: Por favor, introduce la duración de la canción en segundos');
+                        console.log(error)
+                    }
+                }
             };
             return cancion;
 
