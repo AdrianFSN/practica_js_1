@@ -97,17 +97,17 @@ const objetoCatalogo = {
 
         let exit = false
         while (!exit) {
-            let continuar = prompt('¿Quieres añadir una canción al catálogo? (S, N)')
+            let continuar = prompt('¿Quieres añadir otra canción al catálogo? (S, N)')
             if (continuar !== null) {
                 continuar = continuar.toUpperCase()
                 if (continuar === 'S') {
                     objetoCatalogo.listaCanciones.push(crearCancion());
                 } else if (continuar === 'N') {
-                    alert('Paramos de agregar canciones');
+                    console.log('El catálogo se ha actualizado');
                     exit = true;
                 } else { console.log('Solo puedes contestar S o N') };
             } else {
-                alert('Operación cancelada');
+                console.log('Operación cancelada');
                 exit = true
             };
 
@@ -141,10 +141,10 @@ const objetoCatalogo = {
             });
 
             if (listaFiltrada.length === 0) {
-                alert('No hay resultados para tu búsqueda');
+                console.log('No hay resultados para tu búsqueda');
             };
         } else {
-            alert('Operación cancelada');
+            console.log('Operación cancelada');
         };
     },
     calcularMedia: calculoDuracionMedia = () => {
@@ -161,7 +161,30 @@ Duración media de las canciones del catálogo: ${resultado}`;
 
 const miCatalogo = objetoCatalogo;
 
-let userChoice = prompt(`
+let abandonarCatalogo = false;
+
+const controlSalida = () => {
+
+    let accion = prompt('Pulsa "S" para hacer otra consulta o "N" para salir de la aplicación');
+
+    if (accion !== null) {
+        accion = accion.toUpperCase();
+        let salir = false;
+        while (!salir) {
+            if (accion === 'S') {
+                salir = true;
+            } else if (accion === 'N') {
+                return true
+            } else {
+                console.log('Por favor, elige "S" para seguir o "N" para salir de la app');
+            }
+        }
+    }
+
+};
+while (!abandonarCatalogo) {
+
+    let userChoice = prompt(`
 ¿Qué deseas hacer en el catálogo?
 Elige una opción:
 
@@ -172,19 +195,41 @@ Elige una opción:
 
 `);
 
-if (userChoice !== null) {
-    userChoice = userChoice.toUpperCase();
-    if (userChoice === 'L') {
-        console.log(miCatalogo.sacarListaCanciones());
-    } else if (userChoice === 'A') {
-        miCatalogo.crearCatalogo();
-    } else if (userChoice === 'G') {
-        miCatalogo.filtrarXGenero();
-    } else if (userChoice === 'M') {
-        console.log(miCatalogo.calcularMedia());
+    if (userChoice !== null) {
+        userChoice = userChoice.toUpperCase();
+        if (userChoice === 'L') {
+            console.log(miCatalogo.sacarListaCanciones());
+            console.log('------------------------------------------------------------');
+            if (controlSalida()) {
+                abandonarCatalogo = true;
+            };
+        } else if (userChoice === 'A') {
+            miCatalogo.crearCatalogo();
+            console.log('------------------------------------------------------------');
+            if (controlSalida()) {
+                abandonarCatalogo = true;
+            };
+        } else if (userChoice === 'G') {
+            miCatalogo.filtrarXGenero();
+            console.log('------------------------------------------------------------');
+            if (controlSalida()) {
+                abandonarCatalogo = true;
+            };
+        } else if (userChoice === 'M') {
+            console.log(miCatalogo.calcularMedia());
+            console.log('------------------------------------------------------------');
+            if (controlSalida()) {
+                abandonarCatalogo = true;
+            };
+        } else {
+            console.log('Ninguna opción válida elegida')
+            console.log('------------------------------------------------------------');
+            if (controlSalida()) {
+                abandonarCatalogo = true;
+            };
+        }
     } else {
-        console.log('Ninguna opción válida elegida')
-    }
-} else {
-    console.log('Has cancelado la acción');
+        console.log('Has cancelado la acción');
+        abandonarCatalogo = true;
+    };
 };
