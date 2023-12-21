@@ -22,49 +22,52 @@ const objetoCatalogo = {
         {
             titulo: 'Qué puedo hacer',
             genero: 'Pop',
-            duracion: 3.05,
-            mostrarMinutoSegundo: calcularMinutos = (duracion) => {
-                let minutos = duracion / 60;
-                minutos = minutos.toString().split('.');
-                let minutoLimpio = minutos[0];
-                console.log(minutoLimpio);
-
-                let segundos = duracion % 60;
-                console.log(segundos);
-
-                return `${minutoLimpio} min ${segundos} s`
-            }
+            duracion: 185
         },
         {
             titulo: 'Toxicity',
             genero: 'Metal',
-            duracion: 3.38
+            duracion: 198
         },
         {
             titulo: 'Aunque es de noche',
             genero: 'Flamenco',
-            duracion: 3.05
+            duracion: 185
         },
         {
             titulo: 'Lo que dicta el corazón',
             genero: 'Pop',
-            duracion: 3.42
+            duracion: 222
         },
         {
             titulo: 'Country girl',
             genero: 'Rock',
-            duracion: 4.31
+            duracion: 271
         }
 
     ],
     headers: ['TÍTULO'.padEnd(PADDING_TITULO), 'GÉNERO'.padEnd(PADDING_GENERO), 'DURACIÓN'].join(' '),
+
+    mostrarMinutoSegundo: calcularMinutos = (duracion) => {
+        let minutos = duracion / 60;
+        minutos = minutos.toString().split('.');
+        let minutoLimpio = minutos[0];
+        console.log(minutoLimpio);
+
+        let segundos = duracion % 60;
+        console.log(segundos);
+
+        return `${minutoLimpio} min ${segundos} s`
+    },
+
     sacarListaCanciones: listarCatalogo = () => {
         let tablaCatalogo = [objetoCatalogo.headers];
         objetoCatalogo.listaCanciones
-            .forEach(item => tablaCatalogo.push([item.titulo.padEnd(PADDING_TITULO), item.genero.padEnd(PADDING_GENERO), item.duracion].join(' ')));
+            .forEach(item => tablaCatalogo.push([item.titulo.padEnd(PADDING_TITULO), item.genero.padEnd(PADDING_GENERO), objetoCatalogo.mostrarMinutoSegundo(item.duracion)].join(' ')));
         return tablaCatalogo.join('\n');
 
     },
+
     crearCatalogo: llenarCatalogo = () => {
         let cancionesAñadidas = [];
         const crearCancion = () => {
@@ -74,18 +77,6 @@ const objetoCatalogo = {
                 duracion: parseInt(prompt('Por favor, introduce la duración de la canción en segundos'))
             };
             console.log(cancion.duracion, typeof cancion.duracion)
-            /*             const calcularMinutos = (duracion) => {
-                            let minutos = duracion / 60;
-                            minutos = minutos.toString().split('.');
-                            let minutoLimpio = minutos[0];
-                            console.log(minutoLimpio);
-            
-                            let segundos = duracion % 60;
-                            console.log(segundos);
-            
-                            return`${minutoLimpio} min ${segundos} s`
-                        };
-                        calcularMinutos(cancion.duracion); */
 
             while (cancion.duracion < 0 || isNaN(cancion.duracion)) {
                 cancion.duracion = parseInt(prompt('Por favor, introduce la duración de la canción en segundos'));
@@ -118,7 +109,7 @@ const objetoCatalogo = {
             .map(item => [
                 item.titulo.padEnd(PADDING_TITULO),
                 item.genero.padEnd(PADDING_GENERO),
-                item.duracion
+                objetoCatalogo.mostrarMinutoSegundo(item.duracion)
             ]);
         console.log(objetoCatalogo.headers)
         formatCancionesAñadidas.forEach(item =>
@@ -126,6 +117,7 @@ const objetoCatalogo = {
         );
 
     },
+
     filtrarXGenero: filtradoGenero = () => {
         let elegirGenero = prompt('Introduce el género musical por el que quieres filtrar');
         if (elegirGenero !== null) {
