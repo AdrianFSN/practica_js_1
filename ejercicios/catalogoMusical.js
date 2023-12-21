@@ -60,19 +60,19 @@ const objetoCatalogo = {
             let cancion = {
                 titulo: prompt('Por favor, introduce el título de la canción'),
                 genero: prompt('Por favor, introduce el género de la canción'),
-                duracion: parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'), 10)
+                duracion: parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'))
             };
-            let duracionString = cancion.duracion.toString();
-
+            console.log(cancion.duracion, typeof cancion.duracion)
             const separarSegundos = (duracion) => {
                 let partes = duracion.toString();
+                console.log(partes, typeof partes)
                 if (!partes.includes('.')) {
                     partes = parseInt(partes)
                 } else {
                     partes = partes.split('.');
                     let segundos = partes[1];
                     if (segundos.length >= 2) {
-                        segundos = parseInt(segundos, 10);
+                        segundos = parseInt(segundos);
                         return segundos >= 60;
                     } else if (segundos.length < 2) {
                         return segundos >= 6;
@@ -83,7 +83,7 @@ const objetoCatalogo = {
             };
 
             while (cancion.duracion < 0 || isNaN(cancion.duracion) || separarSegundos(cancion.duracion)) {
-                cancion.duracion = parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'), 10);
+                cancion.duracion = parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'));
                 separarSegundos(cancion.duracion)
             };
             return cancion;
