@@ -22,7 +22,18 @@ const objetoCatalogo = {
         {
             titulo: 'Qué puedo hacer',
             genero: 'Pop',
-            duracion: 3.05
+            duracion: 3.05,
+            mostrarMinutoSegundo: calcularMinutos = (duracion) => {
+                let minutos = duracion / 60;
+                minutos = minutos.toString().split('.');
+                let minutoLimpio = minutos[0];
+                console.log(minutoLimpio);
+
+                let segundos = duracion % 60;
+                console.log(segundos);
+
+                return `${minutoLimpio} min ${segundos} s`
+            }
         },
         {
             titulo: 'Toxicity',
@@ -60,31 +71,25 @@ const objetoCatalogo = {
             let cancion = {
                 titulo: prompt('Por favor, introduce el título de la canción'),
                 genero: prompt('Por favor, introduce el género de la canción'),
-                duracion: parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'))
+                duracion: parseInt(prompt('Por favor, introduce la duración de la canción en segundos'))
             };
             console.log(cancion.duracion, typeof cancion.duracion)
-            const separarSegundos = (duracion) => {
-                let partes = duracion.toString();
-                console.log(partes, typeof partes)
-                if (!partes.includes('.')) {
-                    partes = parseInt(partes)
-                } else {
-                    partes = partes.split('.');
-                    let segundos = partes[1];
-                    if (segundos.length >= 2) {
-                        segundos = parseInt(segundos);
-                        return segundos >= 60;
-                    } else if (segundos.length < 2) {
-                        return segundos >= 6;
-                    };
+            /*             const calcularMinutos = (duracion) => {
+                            let minutos = duracion / 60;
+                            minutos = minutos.toString().split('.');
+                            let minutoLimpio = minutos[0];
+                            console.log(minutoLimpio);
+            
+                            let segundos = duracion % 60;
+                            console.log(segundos);
+            
+                            return`${minutoLimpio} min ${segundos} s`
+                        };
+                        calcularMinutos(cancion.duracion); */
 
-                }
-
-            };
-
-            while (cancion.duracion < 0 || isNaN(cancion.duracion) || separarSegundos(cancion.duracion)) {
-                cancion.duracion = parseFloat(prompt('Por favor, introduce la duración de la canción (formato mm.ss)'));
-                separarSegundos(cancion.duracion)
+            while (cancion.duracion < 0 || isNaN(cancion.duracion)) {
+                cancion.duracion = parseInt(prompt('Por favor, introduce la duración de la canción en segundos'));
+                //calcularMinutos(cancion.duracion);
             };
             return cancion;
 
