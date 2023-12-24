@@ -1,5 +1,5 @@
 //Settings
-const NUM_JUGADORES_NECESARIOS = 4;
+const NUM_JUGADORES_NECESARIOS = 8;
 
 // Métodos
 const apuntarJugadores = () => {
@@ -23,16 +23,21 @@ const formarParejas = (pareja, lista) => {
             pointerPareja += 1;
         }
     }
+    console.log('lo que devuelve formar parejas es: ', pareja)
+    return pareja;
 }
 const crearEmparejamientos = (lista) => {
     let listaParejas = [];
-    let parejasNecesarias = NUM_JUGADORES_NECESARIOS / 2;
+    let parejasNecesarias = (NUM_JUGADORES_NECESARIOS / 2);
 
     let unaPareja = [];
 
-    formarParejas(unaPareja, lista);
-    listaParejas.push(unaPareja)
-    console.log(listaParejas);
+    for (let i = 0; i < parejasNecesarias; i++) {
+        listaParejas.push(formarParejas(unaPareja, lista));
+        unaPareja = [];
+    }
+    console.log('Lista de parejas es: ', listaParejas);
+    console.log('Nñumero de parejas necesarias es ', parejasNecesarias);
 };
 
 // Objeto torneo
