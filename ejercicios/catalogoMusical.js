@@ -168,15 +168,16 @@ const controlSalida = () => {
     let accion = prompt('Pulsa "S" para hacer otra consulta o "N" para salir de la aplicación');
 
     if (accion !== null) {
-        accion = accion.toUpperCase();
         let salir = false;
         while (!salir) {
+            accion = accion.toUpperCase();
             if (accion === 'S') {
                 salir = true;
             } else if (accion === 'N') {
                 return true
             } else {
                 console.log('Por favor, elige "S" para seguir o "N" para salir de la app');
+                accion = prompt('Pulsa "S" para hacer otra consulta o "N" para salir de la aplicación');
             }
         }
     }
