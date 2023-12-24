@@ -13,18 +13,24 @@ const apuntarJugadores = () => {
         return listaJugadores;
     }
 };
+
+const formarParejas = (pareja, lista) => {
+    let pointerPareja = 0;
+    while (pointerPareja < 2) {
+        let index = Math.floor(Math.random() * NUM_JUGADORES_NECESARIOS);
+        if (!pareja.includes(lista[index])) {
+            pareja.push(lista[index]);
+            pointerPareja += 1;
+        }
+    }
+}
 const crearEmparejamientos = (lista) => {
     let listaParejas = [];
     let parejasNecesarias = NUM_JUGADORES_NECESARIOS / 2;
-    let controladorNumJugadores = NUM_JUGADORES_NECESARIOS - 1;
+
     let unaPareja = [];
 
-    let pointer = 0;
-    while (pointer < 2) {
-        let index = Math.floor(Math.random() * controladorNumJugadores);
-        unaPareja.push(lista[index]);
-        pointer += 1;
-    }
+    formarParejas(unaPareja, lista);
     listaParejas.push(unaPareja)
     console.log(listaParejas);
 };
@@ -44,3 +50,5 @@ const torneo = {
 const miTorneo = torneo;
 //console.log(miTorneo.jugadoresInscritos);
 crearEmparejamientos(miTorneo.jugadoresInscritos);
+
+
