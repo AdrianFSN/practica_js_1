@@ -2,16 +2,13 @@
 const NUM_JUGADORES_NECESARIOS = 4;
 
 // Métodos
-const apuntarJugadores = () => {
+const apuntarJugadores = (numParticipantes = NUM_JUGADORES_NECESARIOS) => {
     let listaJugadores = [];
-    while (listaJugadores.length < NUM_JUGADORES_NECESARIOS) {
+    while (listaJugadores.length < numParticipantes) {
         let nombreJugador = prompt('Introduce un nombre para el jugador: ');
         listaJugadores.push(nombreJugador);
     }
-    if (listaJugadores.length === NUM_JUGADORES_NECESARIOS) {
-        console.log(`Has inscrito a 4 jugadores: 
-${listaJugadores.join('\n')}
-Puedes iniciar el torneo.`);
+    if (listaJugadores.length === numParticipantes) {
         return listaJugadores;
     }
 };
@@ -46,23 +43,32 @@ const crearEmparejamientos = (lista) => {
     return listaParejas;
 };
 
-// Objeto torneo
-const torneo = {
-    jugadoresInscritos: apuntarJugadores(), // deben ser 4
-    partidoEnJuego: {
-        rival1: '',
-        rival2: '',
-        marcadorRival1: 0,
-        marcadorRival2: 0,
-    },
+const createMatch = (jugadorA, jugadorB) => {
+    let rivalA = {
+        nombre: jugadorA,
+        evolucionPuntos: [],
+        totalPuntos: 0
+
+    };
+    let rivalB = {
+        nombre: jugadorB,
+        evolucionPuntos: [],
+        totalPuntos: 0
+    };
+
+    return [rivalA, rivalB];
 };
 
-const miTorneo = torneo;
+// Torneo
+const jugadoresInscritos = apuntarJugadores(); // deben ser 4
+console.log(`Has inscrito a 4 jugadores: 
+${jugadoresInscritos.join('\n')}
+Puedes iniciar el torneo.`);
 
-//miTorneo.jugadoresInscritos;
-console.log(`
-Este es el cuadro del torneo:
-${crearEmparejamientos(miTorneo.jugadoresInscritos).join('\n')}`);
+const cuadroTorneo = crearEmparejamientos(jugadoresInscritos);
+
+const game = createMatch('Alberto C', 'David J');
+console.log(game);
 
 
 
