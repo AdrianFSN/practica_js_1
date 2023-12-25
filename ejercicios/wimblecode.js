@@ -55,31 +55,42 @@ const createMatch = (jugadorA, jugadorB) => {
     let rivalB = {
         id: 2,
         nombre: jugadorB,
-        evolucionPuntos: [],
+        evolucionPuntos: 0,
         totalPuntos: 0
     };
     let marcadorRonda = [
-        rivalA.totalPuntos,
-        rivalB.totalPuntos
+        rivalA.evolucionPuntos,
+        rivalB.evolucionPuntos
     ];
+
+    const traducirPuntos = (tanteoA) => {
+        if (tanteoA === 0) {
+            return 0;
+        } else if (tanteoA === 1) {
+            return 15;
+        } else if (tanteoA === 2) {
+            return 30;
+        } else if (tanteoA === 3) {
+            return 40;
+        };
+    };
     const pointWonBy = (id) => {
         let punto = 1;
         if (id === rivalA.id) {
             console.log(`¡Punto para ${rivalA.nombre}!`)
             rivalA.totalPuntos += punto;
+            rivalA.evolucionPuntos = traducirPuntos(rivalA.totalPuntos);
         } else {
             console.log(`¡Punto para ${rivalB.nombre}!`)
             rivalB.totalPuntos += punto;
+            rivalA.evolucionPuntos = traducirPuntos(rivalB.totalPuntos);
         };
         marcadorRonda = [
-            rivalA.totalPuntos,
-            rivalB.totalPuntos
+            rivalA.evolucionPuntos,
+            rivalB.evolucionPuntos
         ];
     };
-    //let numeroAleatrorio = Math.floor(Math.random() * 2) + 1;
-    //console.log(numeroAleatrorio);
-    //console.log(pointWonBy(numeroAleatrorio));
-    //console.log(pointWonBy(Math.floor(Math.random() * 2) + 1));
+
     pointWonBy(Math.floor(Math.random() * 2) + 1);
 
     return [rivalA, rivalB, marcadorRonda];
