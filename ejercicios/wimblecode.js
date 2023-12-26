@@ -140,7 +140,7 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                     rivalA.evolucionPuntos = 40
                 };
 
-                console.log(`HOLA: Así va el marcador de esta ronda:
+                console.log(`Actualizamos el marcador de esta ronda:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
 
@@ -157,7 +157,7 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                         rivalA.evolucionPuntos = 40
                     };
 
-                    console.log(`HOLA2 Así va el marcador de esta ronda:
+                    console.log(`El marcador de esta ronda va así:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                 };
@@ -181,10 +181,14 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
             };
         }
     };
+
+    const resetearPuntos = (marcador => marcador.totalPuntos = 0);
+
+
     const partido = () => {
         console.log(`¡Comienza el partido entre ${rivalA.nombre} y ${rivalB.nombre}!`);
-        let salir = false;
 
+        let salir = false;
         while (!salir) {
             if (rivalA.rondasGanadas < 1 && rivalB.rondasGanadas < 1) {
                 jugarRonda();
@@ -192,7 +196,9 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
             } else {
-                console.log('Alguien ha ganado');
+                console.log('EL PARTIDO LO HA GANADO...');
+                resetearPuntos(rivalA);
+                resetearPuntos(rivalB);
                 salir = true;
             }
         }
