@@ -98,6 +98,7 @@ const createMatch = (jugadorA, jugadorB) => {
             return 'RONDA GANADA';
         };
     };
+
     const pointWonBy = (id) => {
         let punto = 1;
         if (id === rivalA.id) {
@@ -112,6 +113,10 @@ const createMatch = (jugadorA, jugadorB) => {
             rivalA.evolucionPuntos,
             rivalB.evolucionPuntos
         ];
+    };
+
+    const reseteos = (jugador, parametro, valor = 0) => {
+        jugador[parametro] = valor;
     };
 
     const jugarRonda = () => {
@@ -165,47 +170,47 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
             if (rivalA.totalPuntos === 5) {
                 rivalA.rondasGanadas += 1;
                 console.log(`¡${rivalA.nombre} gana la ronda!`)
+                reseteos(rivalA, 'totalPuntos')
+                reseteos(rivalB, 'totalPuntos')
             } else if (rivalB.totalPuntos === 5) {
                 rivalB.rondasGanadas += 1;
                 console.log(`¡${rivalB.nombre} gana la ronda!`)
+                reseteos(rivalA, 'totalPuntos')
+                reseteos(rivalB, 'totalPuntos')
             }
 
         } else {
             if (rivalA.totalPuntos === 4) {
-                console.log(`¡${rivalA.nombre} gana la ronda!`)
                 rivalA.rondasGanadas += 1;
+                console.log(`¡${rivalA.nombre} gana la ronda!`)
+                reseteos(rivalA, 'totalPuntos')
+                reseteos(rivalB, 'totalPuntos')
             } else if (rivalB.totalPuntos === 4) {
                 rivalB.rondasGanadas += 1;
                 console.log(`¡${rivalB.nombre} gana la ronda!`)
+                reseteos(rivalA, 'totalPuntos')
+                reseteos(rivalB, 'totalPuntos')
 
             };
         }
     };
-
-    const reseteos = (jugador, parametro, valor = 0) => {
-        jugador[parametro] = valor;
-    }
 
     const partido = () => {
         console.log(`¡Comienza el partido entre ${rivalA.nombre} y ${rivalB.nombre}!`);
 
         let salir = false;
         while (!salir) {
-            if (rivalA.rondasGanadas < 1 && rivalB.rondasGanadas < 1) {
+            if (rivalA.rondasGanadas < 4 && rivalB.rondasGanadas < 4) {
                 jugarRonda();
-                console.log(`Así ha quedado el marcador de esta ronda:
+                console.log(`Así está el marcador de la ronda:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
             } else {
                 console.log('EL PARTIDO LO HA GANADO...');
-                reseteos(rivalA, 'totalPuntos');
                 console.log(rivalA.totalPuntos)
-                reseteos(rivalB, 'totalPuntos');
                 console.log(rivalB.totalPuntos)
-                /*                 resetearPuntos(rivalA);
-                                console.log(rivalA.totalPuntos)
-                                resetearPuntos(rivalB);
-                                console.log(rivalB.totalPuntos) */
+                console.log(rivalA.rondasGanadas)
+                console.log(rivalB.rondasGanadas)
                 salir = true;
             }
         }
