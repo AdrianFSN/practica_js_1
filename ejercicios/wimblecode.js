@@ -145,7 +145,7 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                     rivalA.evolucionPuntos = 40
                 };
 
-                console.log(`Actualizamos el marcador de esta ronda:
+                console.log(`Vamos a actualizar el marcador de esta ronda:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
 
@@ -198,13 +198,20 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
     const partido = () => {
         console.log(`¡Comienza el partido entre ${rivalA.nombre} y ${rivalB.nombre}!`);
 
+        let rondasNecesarias = 4;
         let salir = false;
         while (!salir) {
-            if (rivalA.rondasGanadas < 4 && rivalB.rondasGanadas < 4) {
+            if (rivalA.rondasGanadas < rondasNecesarias && rivalB.rondasGanadas < rondasNecesarias) {
                 jugarRonda();
                 console.log(`Así está el marcador de la ronda:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
+                if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
+                    (rivalB.rondasGanadas < 7 && rivalB.rondasGanadas >= rondasNecesarias && rivalB.rondasGanadas - rivalA.rondasGanadas === 1)) {
+                    rondasNecesarias += 1;
+                    jugarRonda();
+                    console.log('rondas necesarias es ', rondasNecesarias)
+                }
             } else {
                 console.log('EL PARTIDO LO HA GANADO...');
                 console.log(rivalA.totalPuntos)
