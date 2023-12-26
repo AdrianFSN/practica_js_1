@@ -129,7 +129,7 @@ const createMatch = (jugadorA, jugadorB) => {
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
 
-            while (rivalA.totalPuntos !== 5 || rivalA.totalPuntos !== 5) {
+            while (rivalA.totalPuntos !== 5 && rivalB.totalPuntos !== 5) {
                 pointWonBy(Math.floor(Math.random() * 2) + 1);
                 rivalA.evolucionPuntos = traducirPuntosDeuce(rivalA.totalPuntos);
                 rivalB.evolucionPuntos = traducirPuntosDeuce(rivalB.totalPuntos);
