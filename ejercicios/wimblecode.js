@@ -182,23 +182,26 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
         }
     };
 
-    const resetearPuntos = (marcador => marcador.totalPuntos = 0);
-
+    const resetearPuntos = (jugador =>
+        jugador.totalPuntos = 0
+    );
 
     const partido = () => {
         console.log(`¡Comienza el partido entre ${rivalA.nombre} y ${rivalB.nombre}!`);
 
         let salir = false;
         while (!salir) {
-            if (rivalA.rondasGanadas < 1 && rivalB.rondasGanadas < 1) {
+            if (rivalA.rondasGanadas < 2 && rivalB.rondasGanadas < 2) {
                 jugarRonda();
-                console.log(`Así va el marcador de esta ronda:
+                console.log(`Así ha quedado el marcador de esta ronda:
 ${rivalA.nombre}: ${rivalA.evolucionPuntos}
 ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
             } else {
                 console.log('EL PARTIDO LO HA GANADO...');
                 resetearPuntos(rivalA);
+                console.log(rivalA.totalPuntos)
                 resetearPuntos(rivalB);
+                console.log(rivalB.totalPuntos)
                 salir = true;
             }
         }
