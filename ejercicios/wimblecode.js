@@ -54,7 +54,8 @@ const createMatch = (jugadorA, jugadorB) => {
         juegosGanados: 0,
         partidosGanados: 0,
         resultadoJuego1: 0,
-        resultadoJuego2: 0
+        resultadoJuego2: 0,
+        resultadoJuego3: 0
 
     };
     let rivalB = {
@@ -66,15 +67,16 @@ const createMatch = (jugadorA, jugadorB) => {
         juegosGanados: 0,
         partidosGanados: 0,
         resultadoJuego1: 0,
-        resultadoJuego2: 0
+        resultadoJuego2: 0,
+        resultadoJuego3: 0
     };
 
 
     const getRoundScore = () => {
         let marcador = [
-            ['', 'Rondas A', 'Rondas B', 'Juegos'],
-            [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.juegosGanados],
-            [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.juegosGanados],
+            ['', 'Rondas J-A', 'Rondas J-B', 'Rondas J-C', 'Juegos'],
+            [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.resultadoJuego3, rivalA.juegosGanados],
+            [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.resultadoJuego3, rivalB.juegosGanados],
         ];
 
         let formatear = marcador
@@ -225,17 +227,23 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                     if (rivalA.evolucionPuntos === 'RONDA GANADA') {
                         if (rivalA.juegosGanados < 1 && rivalB.juegosGanados < 1) {
                             reasignarValor(rivalA, 'resultadoJuego1', rivalA.rondasGanadas);
-                        } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
+                        } else if ((rivalA.juegosGanados === 1 && rivalB.juegosGanados === 0)
+                            || (rivalA.juegosGanados === 0 && rivalB.juegosGanados === 1)) {
                             reasignarValor(rivalA, 'resultadoJuego2', rivalA.rondasGanadas);
-                        };
+                        } else if (rivalA.juegosGanados === 1 && rivalB.juegosGanados === 1) {
+                            reasignarValor(rivalA, 'resultadoJuego3', rivalA.rondasGanadas);
+                        } else { console.log('Hola') };
                         getRoundScore();
 
                     } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
                         if (rivalA.juegosGanados < 1 && rivalB.juegosGanados < 1) {
                             reasignarValor(rivalB, 'resultadoJuego1', rivalB.rondasGanadas);
-                        } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
+                        } else if ((rivalA.juegosGanados === 1 && rivalB.juegosGanados === 0)
+                            || (rivalA.juegosGanados === 0 && rivalB.juegosGanados === 1)) {
                             reasignarValor(rivalB, 'resultadoJuego2', rivalB.rondasGanadas);
-                        };
+                        } else if (rivalA.juegosGanados === 1 && rivalB.juegosGanados === 1) {
+                            reasignarValor(rivalB, 'resultadoJuego3', rivalB.rondasGanadas);
+                        } else { console.log('Hola') };
                         getRoundScore();
 
                     };
