@@ -48,7 +48,7 @@ const createMatch = (jugadorA, jugadorB) => {
     let rivalA = {
         id: 1,
         nombre: jugadorA,
-        evolucionPuntos: [],
+        evolucionPuntos: 0,
         totalPuntos: 0,
         rondasGanadas: 0,
         juegosGanados: 0,
@@ -131,8 +131,7 @@ const createMatch = (jugadorA, jugadorB) => {
             rivalA.evolucionPuntos = traducirPuntosDeuce(rivalA.totalPuntos);
             rivalB.evolucionPuntos = traducirPuntosDeuce(rivalB.totalPuntos);
             console.log(`Así va el marcador de esta ronda:
-${rivalA.nombre}: ${rivalA.evolucionPuntos}
-${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
+${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
 
             while (rivalA.totalPuntos !== 5 && rivalB.totalPuntos !== 5) {
                 pointWonBy(Math.floor(Math.random() * 2) + 1);
@@ -146,8 +145,7 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                 };
 
                 console.log(`Vamos a actualizar el marcador de esta ronda:
-${rivalA.nombre}: ${rivalA.evolucionPuntos}
-${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
+${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
 
                 if (rivalA.totalPuntos === 4 && rivalB.totalPuntos === 4) {
                     console.log('¡Hay deuce de nuevo!')
@@ -163,8 +161,7 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
                     };
 
                     console.log(`El marcador de esta ronda va así:
-${rivalA.nombre}: ${rivalA.evolucionPuntos}
-${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
+${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
                 };
             }
             if (rivalA.totalPuntos === 5) {
@@ -199,29 +196,51 @@ ${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
         console.log(`¡Comienza el partido entre ${rivalA.nombre} y ${rivalB.nombre}!`);
 
         let rondasNecesarias = 4;
+        let juegosNecesarios = 2;
         let salir = false;
         while (!salir) {
-            if (rivalA.rondasGanadas < rondasNecesarias && rivalB.rondasGanadas < rondasNecesarias) {
-                jugarRonda();
-                console.log(`Así está el marcador de la ronda:
-${rivalA.nombre}: ${rivalA.evolucionPuntos}
-${rivalB.nombre}: ${rivalB.evolucionPuntos}`);
-                if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
-                    (rivalB.rondasGanadas < 7 && rivalB.rondasGanadas >= rondasNecesarias && rivalB.rondasGanadas - rivalA.rondasGanadas === 1)) {
-                    rondasNecesarias += 1;
+            if (rivalA.juegosGanados < juegosNecesarios && rivalB.juegosGanados < juegosNecesarios) {
+                if (rivalA.rondasGanadas < rondasNecesarias && rivalB.rondasGanadas < rondasNecesarias) {
                     jugarRonda();
-                    console.log('rondas necesarias es ', rondasNecesarias)
-                }
+                    console.log(`Así está el marcador de la ronda:
+${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
+                    if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
+                        (rivalB.rondasGanadas < 7 && rivalB.rondasGanadas >= rondasNecesarias && rivalB.rondasGanadas - rivalA.rondasGanadas === 1)) {
+                        rondasNecesarias += 1;
+                        jugarRonda();
+                        //console.log('rondas necesarias es ', rondasNecesarias)
+                    };
+                } else {
+                    console.log('EL JUEGO LO HA GANADO...');
+                    if (rivalA.rondasGanadas > rivalB.rondasGanadas) {
+                        console.log(`¡${rivalA.nombre}!`);
+                        rivalA.juegosGanados++;
+                    } else if (rivalB.rondasGanadas > rivalA.rondasGanadas) {
+                        console.log(`¡${rivalB.nombre}!`);
+                        rivalB.juegosGanados++;
+
+                    };
+                    // Presentar el marcador del juego
+                    console.log(rivalA.nombre, rivalA.rondasGanadas, rivalA.juegosGanados)
+                    console.log(rivalB.nombre, rivalB.rondasGanadas, rivalB.juegosGanados)
+                    reseteos(rivalA, 'rondasGanadas');
+                    reseteos(rivalB, 'rondasGanadas');
+                    //salir = true;
+                };
             } else {
                 console.log('EL PARTIDO LO HA GANADO...');
-                console.log(rivalA.totalPuntos)
-                console.log(rivalB.totalPuntos)
-                console.log(rivalA.rondasGanadas)
-                console.log(rivalB.rondasGanadas)
+                if (rivalA.juegosGanados > rivalB.juegosGanados) {
+                    console.log(`¡${rivalA.nombre}!`)
+                } else if (rivalB.juegosGanados > rivalA.juegosGanados) {
+                    console.log(`¡${rivalB.nombre}!`)
+                };
+                // Presentar el marcador del partido
+                console.log(rivalA.nombre, rivalA.juegosGanados);
+                console.log(rivalB.nombre, rivalB.juegosGanados);
                 salir = true;
-            }
+            };
         }
-    }
+    };
     partido();
 
 
