@@ -68,12 +68,24 @@ const createMatch = (jugadorA, jugadorB) => {
         resultadoJuego1: 0,
         resultadoJuego2: 0
     };
-    let marcador = [
-        [, 'Juego 1', 'Juego 2', 'Total'],
-        [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.juegosGanados],
-        [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.juegosGanados],
-    ];
 
+
+    const getRoundScore = () => {
+        let marcador = [
+            ['', 'Juego 1', 'Juego 2', 'Total'],
+            [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.juegosGanados],
+            [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.juegosGanados],
+        ];
+
+        let formatear = marcador
+            .map((elemento) => elemento
+                .map((item) => String(item)
+                    .padStart(10)).join(' '));
+
+
+        return console.log(formatear.join('\n'));
+
+    };
     const traducirPuntosNormal = (tanteoA) => {
         if (tanteoA === 0) {
             return '0';
@@ -211,13 +223,28 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
 ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
 
                     if (rivalA.evolucionPuntos === 'RONDA GANADA') {
+                        if (rivalA.juegosGanados < 1) {
+                            reasignarValor(rivalA, 'resultadoJuego1', rivalA.rondasGanadas);
+                        } else {
+                            reasignarValor(rivalA, 'resultadoJuego2', rivalA.rondasGanadas);
+                        };
                         // Presentar marcador de la ronda
-                        console.log(rivalA.nombre, rivalA.rondasGanadas);
-                        console.log(rivalB.nombre, rivalB.rondasGanadas);
+                        //console.log(marcador);
+                        getRoundScore();
+                        /* console.log(rivalA.nombre, rivalA.rondasGanadas);
+                        console.log(rivalB.nombre, rivalB.rondasGanadas); */
                     } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
+                        if (rivalB.juegosGanados < 1) {
+                            reasignarValor(rivalB, 'resultadoJuego1', rivalB.rondasGanadas);
+                        } else {
+                            reasignarValor(rivalB, 'resultadoJuego2', rivalB.rondasGanadas);
+                        };
                         // Presentar marcador de la ronda
-                        console.log(rivalA.nombre, rivalA.rondasGanadas);
-                        console.log(rivalB.nombre, rivalB.rondasGanadas);
+                        //console.log(marcador);
+                        getRoundScore();
+                        // Presentar marcador de la ronda
+                        /* console.log(rivalA.nombre, rivalA.rondasGanadas);
+                        console.log(rivalB.nombre, rivalB.rondasGanadas); */
                     };
 
                     if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
