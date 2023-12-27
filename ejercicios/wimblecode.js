@@ -223,28 +223,23 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
 ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
 
                     if (rivalA.evolucionPuntos === 'RONDA GANADA') {
-                        if (rivalA.juegosGanados < 1) {
+                        if (rivalA.juegosGanados < 1 && rivalB.juegosGanados < 1) {
                             reasignarValor(rivalA, 'resultadoJuego1', rivalA.rondasGanadas);
-                        } else {
+                        } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
                             reasignarValor(rivalA, 'resultadoJuego2', rivalA.rondasGanadas);
                         };
-                        // Presentar marcador de la ronda
-                        //console.log(marcador);
+                        rondasNecesarias = 4;
                         getRoundScore();
-                        /* console.log(rivalA.nombre, rivalA.rondasGanadas);
-                        console.log(rivalB.nombre, rivalB.rondasGanadas); */
+
                     } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
-                        if (rivalB.juegosGanados < 1) {
+                        if (rivalA.juegosGanados < 1 && rivalB.juegosGanados < 1) {
                             reasignarValor(rivalB, 'resultadoJuego1', rivalB.rondasGanadas);
-                        } else {
+                        } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
                             reasignarValor(rivalB, 'resultadoJuego2', rivalB.rondasGanadas);
                         };
-                        // Presentar marcador de la ronda
-                        //console.log(marcador);
+                        rondasNecesarias = 4;
                         getRoundScore();
-                        // Presentar marcador de la ronda
-                        /* console.log(rivalA.nombre, rivalA.rondasGanadas);
-                        console.log(rivalB.nombre, rivalB.rondasGanadas); */
+
                     };
 
                     if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
@@ -264,14 +259,13 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
 
                     };
                     // Presentar el marcador del juego
-                    console.log(rivalA.nombre, rivalA.rondasGanadas, rivalA.juegosGanados)
-                    console.log(rivalB.nombre, rivalB.rondasGanadas, rivalB.juegosGanados)
+                    getRoundScore();
                     reasignarValor(rivalA, 'rondasGanadas');
                     reasignarValor(rivalB, 'rondasGanadas');
-                    //salir = true;
+
                 };
             } else {
-                //Presentar marcador del partido
+                //Presentar ganador del partido
                 console.log('EL PARTIDO LO HA GANADO...');
                 if (rivalA.juegosGanados > rivalB.juegosGanados) {
                     console.log(`¡${rivalA.nombre}!`)
@@ -279,8 +273,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                     console.log(`¡${rivalB.nombre}!`)
                 };
                 // Presentar el marcador del partido
-                console.log(rivalA.nombre, rivalA.juegosGanados);
-                console.log(rivalB.nombre, rivalB.juegosGanados);
+                getRoundScore();
                 salir = true;
             };
         }
