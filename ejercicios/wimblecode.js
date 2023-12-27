@@ -72,7 +72,7 @@ const createMatch = (jugadorA, jugadorB) => {
 
     const getRoundScore = () => {
         let marcador = [
-            ['', 'Juego 1', 'Juego 2', 'Total'],
+            ['', 'Rondas A', 'Rondas B', 'Juegos'],
             [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.juegosGanados],
             [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.juegosGanados],
         ];
@@ -228,7 +228,6 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                         } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
                             reasignarValor(rivalA, 'resultadoJuego2', rivalA.rondasGanadas);
                         };
-                        rondasNecesarias = 4;
                         getRoundScore();
 
                     } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
@@ -237,7 +236,6 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                         } else if (rivalA.juegosGanados === 1 || rivalB.juegosGanados === 1) {
                             reasignarValor(rivalB, 'resultadoJuego2', rivalB.rondasGanadas);
                         };
-                        rondasNecesarias = 4;
                         getRoundScore();
 
                     };
@@ -260,6 +258,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                     };
                     // Presentar el marcador del juego
                     getRoundScore();
+                    rondasNecesarias = 4;
                     reasignarValor(rivalA, 'rondasGanadas');
                     reasignarValor(rivalB, 'rondasGanadas');
 
