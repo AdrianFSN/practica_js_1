@@ -52,7 +52,9 @@ const createMatch = (jugadorA, jugadorB) => {
         totalPuntos: 0,
         rondasGanadas: 0,
         juegosGanados: 0,
-        partidosGanados: 0
+        partidosGanados: 0,
+        resultadoJuego1: 0,
+        resultadoJuego2: 0
 
     };
     let rivalB = {
@@ -62,11 +64,14 @@ const createMatch = (jugadorA, jugadorB) => {
         totalPuntos: 0,
         rondasGanadas: 0,
         juegosGanados: 0,
-        partidosGanados: 0
+        partidosGanados: 0,
+        resultadoJuego1: 0,
+        resultadoJuego2: 0
     };
-    let marcadorRonda = [
-        rivalA.evolucionPuntos,
-        rivalB.evolucionPuntos
+    let marcador = [
+        [, 'Juego 1', 'Juego 2', 'Total'],
+        [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.juegosGanados],
+        [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.juegosGanados],
     ];
 
     const traducirPuntosNormal = (tanteoA) => {
@@ -109,13 +114,13 @@ const createMatch = (jugadorA, jugadorB) => {
             console.log(`¡Punto para ${rivalB.nombre}!`)
             rivalB.totalPuntos += punto;
         };
-        marcadorRonda = [
+        marcador = [
             rivalA.evolucionPuntos,
             rivalB.evolucionPuntos
         ];
     };
 
-    const reseteos = (jugador, parametro, valor = 0) => {
+    const reasignarValor = (jugador, parametro, valor = 0) => {
         jugador[parametro] = valor;
     };
 
@@ -166,27 +171,27 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
             }
             if (rivalA.totalPuntos === 5) {
                 rivalA.rondasGanadas += 1;
-                console.log(`¡${rivalA.nombre} gana la ronda!`)
-                reseteos(rivalA, 'totalPuntos')
-                reseteos(rivalB, 'totalPuntos')
+                console.log(`¡${rivalA.nombre} gana la ronda!`);
+                reasignarValor(rivalA, 'totalPuntos');
+                reasignarValor(rivalB, 'totalPuntos');
             } else if (rivalB.totalPuntos === 5) {
                 rivalB.rondasGanadas += 1;
-                console.log(`¡${rivalB.nombre} gana la ronda!`)
-                reseteos(rivalA, 'totalPuntos')
-                reseteos(rivalB, 'totalPuntos')
+                console.log(`¡${rivalB.nombre} gana la ronda!`);
+                reasignarValor(rivalA, 'totalPuntos');
+                reasignarValor(rivalB, 'totalPuntos');
             }
 
         } else {
             if (rivalA.totalPuntos === 4) {
                 rivalA.rondasGanadas += 1;
-                console.log(`¡${rivalA.nombre} gana la ronda!`)
-                reseteos(rivalA, 'totalPuntos')
-                reseteos(rivalB, 'totalPuntos')
+                console.log(`¡${rivalA.nombre} gana la ronda!`);
+                reasignarValor(rivalA, 'totalPuntos');
+                reasignarValor(rivalB, 'totalPuntos');
             } else if (rivalB.totalPuntos === 4) {
                 rivalB.rondasGanadas += 1;
-                console.log(`¡${rivalB.nombre} gana la ronda!`)
-                reseteos(rivalA, 'totalPuntos')
-                reseteos(rivalB, 'totalPuntos')
+                console.log(`¡${rivalB.nombre} gana la ronda!`);
+                reasignarValor(rivalA, 'totalPuntos');
+                reasignarValor(rivalB, 'totalPuntos');
 
             };
         }
@@ -202,8 +207,19 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
             if (rivalA.juegosGanados < juegosNecesarios && rivalB.juegosGanados < juegosNecesarios) {
                 if (rivalA.rondasGanadas < rondasNecesarias && rivalB.rondasGanadas < rondasNecesarias) {
                     jugarRonda();
-                    console.log(`Así está el marcador de la ronda:
+                    console.log(`Así queda el marcador de la ronda:
 ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
+
+                    if (rivalA.evolucionPuntos === 'RONDA GANADA') {
+                        // Presentar marcador de la ronda
+                        console.log(rivalA.nombre, rivalA.rondasGanadas);
+                        console.log(rivalB.nombre, rivalB.rondasGanadas);
+                    } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
+                        // Presentar marcador de la ronda
+                        console.log(rivalA.nombre, rivalA.rondasGanadas);
+                        console.log(rivalB.nombre, rivalB.rondasGanadas);
+                    };
+
                     if ((rivalA.rondasGanadas < 7 && rivalA.rondasGanadas >= rondasNecesarias && rivalA.rondasGanadas - rivalB.rondasGanadas === 1) ||
                         (rivalB.rondasGanadas < 7 && rivalB.rondasGanadas >= rondasNecesarias && rivalB.rondasGanadas - rivalA.rondasGanadas === 1)) {
                         rondasNecesarias += 1;
@@ -223,11 +239,12 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                     // Presentar el marcador del juego
                     console.log(rivalA.nombre, rivalA.rondasGanadas, rivalA.juegosGanados)
                     console.log(rivalB.nombre, rivalB.rondasGanadas, rivalB.juegosGanados)
-                    reseteos(rivalA, 'rondasGanadas');
-                    reseteos(rivalB, 'rondasGanadas');
+                    reasignarValor(rivalA, 'rondasGanadas');
+                    reasignarValor(rivalB, 'rondasGanadas');
                     //salir = true;
                 };
             } else {
+                //Presentar marcador del partido
                 console.log('EL PARTIDO LO HA GANADO...');
                 if (rivalA.juegosGanados > rivalB.juegosGanados) {
                     console.log(`¡${rivalA.nombre}!`)
@@ -244,7 +261,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
     partido();
 
 
-    return [rivalA, rivalB, marcadorRonda];
+    return [rivalA, rivalB, marcador];
 };
 
 // Torneo
