@@ -277,7 +277,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                 };
             } else {
                 //Presentar ganador del partido
-                console.log('EL PARTIDO LO HA GANADO...');
+                console.log('*********************************** EL PARTIDO LO HA GANADO... ***********************************');
                 if (rivalA.juegosGanados > rivalB.juegosGanados) {
                     console.log(`¡${rivalA.nombre}!`);
                     return rivalA.nombre;
@@ -308,14 +308,14 @@ console.log(`Este es el cuadro del torneo:
 Partido 1: ${cuadroTorneo[0][0]} vs. ${cuadroTorneo[0][1]}
 Partido 2: ${cuadroTorneo[1][0]} vs. ${cuadroTorneo[1][1]}`)
 
-console.log('EMPIEZA LA PRIMERA SEMIFINAL ---------------------------------------------->')
+console.log('########################### EMPIEZA LA PRIMERA SEMIFINAL ###########################')
 const game1 = createMatch(cuadroTorneo[0][0], cuadroTorneo[0][1]);
 
-console.log('EMPIEZA LA SEGUNDA SEMIFINAL ---------------------------------------------->')
+console.log('########################### EMPIEZA LA SEGUNDA SEMIFINAL ###########################')
 const game2 = createMatch(cuadroTorneo[1][0], cuadroTorneo[1][1])
 
 console.log(`
-FINAL ---------------------------------------------->:
+########################### FINAL ###########################:
 ${game1} vs. ${game2} 
 `);
 
