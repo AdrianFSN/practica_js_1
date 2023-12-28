@@ -74,7 +74,7 @@ const createMatch = (jugadorA, jugadorB) => {
 
     const getRoundScore = () => {
         let marcador = [
-            ['', 'Rondas J-A', 'Rondas J-B', 'Rondas J-C', 'Juegos'],
+            [' ', 'Rondas J1', 'Rondas J2', 'Rondas J3', 'Juegos'],
             [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.resultadoJuego3, rivalA.juegosGanados],
             [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.resultadoJuego3, rivalB.juegosGanados],
         ];
@@ -85,18 +85,20 @@ const createMatch = (jugadorA, jugadorB) => {
                     .padStart(10)).join(' '));
 
 
-        return console.log(formatear.join('\n'));
+        return console.log(`
+Marcador partido:
+${formatear.join('\n')}`);
 
     };
     const traducirPuntosNormal = (tanteoA) => {
         if (tanteoA === 0) {
             return '0';
         } else if (tanteoA === 1) {
-            return 15;
+            return '15';
         } else if (tanteoA === 2) {
-            return 30;
+            return '30';
         } else if (tanteoA === 3) {
-            return 40;
+            return '40';
         } else if (tanteoA === 4) {
             return 'RONDA GANADA';
         };
@@ -106,11 +108,11 @@ const createMatch = (jugadorA, jugadorB) => {
         if (tanteoA === 0) {
             return '0';
         } else if (tanteoA === 1) {
-            return 15;
+            return '15';
         } else if (tanteoA === 2) {
-            return 30;
+            return '30';
         } else if (tanteoA === 3) {
-            return 'Deuce';
+            return '40';
         } else if (tanteoA === 4) {
             return 'Ventaja';
         } else if (tanteoA === 5) {
@@ -139,48 +141,42 @@ const createMatch = (jugadorA, jugadorB) => {
     };
 
     const jugarRonda = () => {
-        console.log(`Empieza el punto entre ${rivalA.nombre} y ${rivalB.nombre}...`);
+        console.log(`Empieza un nuevo punto entre ${rivalA.nombre} y ${rivalB.nombre}...`);
         console.log(`Está siendo un peloteo vibrante...`);
         pointWonBy(Math.floor(Math.random() * 2) + 1);
         rivalA.evolucionPuntos = traducirPuntosNormal(rivalA.totalPuntos);
         rivalB.evolucionPuntos = traducirPuntosNormal(rivalB.totalPuntos);
 
         if (rivalA.totalPuntos === 3 && rivalB.totalPuntos === 3) {
-            console.log('¡Hay deuce!')
             rivalA.evolucionPuntos = traducirPuntosDeuce(rivalA.totalPuntos);
             rivalB.evolucionPuntos = traducirPuntosDeuce(rivalB.totalPuntos);
-            console.log(`Así va el marcador de esta ronda:
-${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
+            getCurrentRoundScore();
 
             while (rivalA.totalPuntos !== 5 && rivalB.totalPuntos !== 5) {
                 pointWonBy(Math.floor(Math.random() * 2) + 1);
                 rivalA.evolucionPuntos = traducirPuntosDeuce(rivalA.totalPuntos);
                 rivalB.evolucionPuntos = traducirPuntosDeuce(rivalB.totalPuntos);
 
-                if (rivalA.evolucionPuntos === 'Ventaja' || rivalA.evolucionPuntos === 'RONDA GANADA') {
-                    rivalB.evolucionPuntos = 40
-                } else if (rivalB.evolucionPuntos === 'Ventaja' || rivalB.evolucionPuntos === 'RONDA GANADA') {
-                    rivalA.evolucionPuntos = 40
+                if (rivalA.evolucionPuntos === 'RONDA GANADA') {
+                    rivalB.evolucionPuntos = '40'
+                } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
+                    rivalA.evolucionPuntos = '40'
                 };
 
-                console.log(`Vamos a actualizar el marcador de esta ronda:
-${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
+                getCurrentRoundScore();
 
                 if (rivalA.totalPuntos === 4 && rivalB.totalPuntos === 4) {
-                    console.log('¡Hay deuce de nuevo!')
                     rivalA.totalPuntos -= 1;
                     rivalB.totalPuntos -= 1;
                     rivalA.evolucionPuntos = traducirPuntosDeuce(rivalA.totalPuntos);
                     rivalB.evolucionPuntos = traducirPuntosDeuce(rivalB.totalPuntos);
 
-                    if (rivalA.evolucionPuntos === 'Ventaja' || rivalA.evolucionPuntos === 'RONDA GANADA') {
-                        rivalB.evolucionPuntos = 40
-                    } else if (rivalB.evolucionPuntos === 'Ventaja' || rivalB.evolucionPuntos === 'RONDA GANADA') {
-                        rivalA.evolucionPuntos = 40
+                    if (rivalA.evolucionPuntos === 'RONDA GANADA') {
+                        rivalB.evolucionPuntos = '40'
+                    } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
+                        rivalA.evolucionPuntos = '40'
                     };
 
-                    console.log(`El marcador de esta ronda va así:
-${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
                 };
             }
             if (rivalA.totalPuntos === 5) {
@@ -209,6 +205,18 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
 
             };
         }
+
+
+    };
+
+    const getCurrentRoundScore = () => {
+        let resultado = `Marcador ronda:
+${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`;
+        if ((rivalA.totalPuntos === 3 && rivalB.totalPuntos === 3)
+            || (rivalA.totalPuntos === 4 && rivalB.totalPuntos === 4)) {
+            resultado = 'Deuce';
+        };
+        return console.log(resultado);
     };
 
     const partido = () => {
@@ -221,8 +229,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
             if (rivalA.juegosGanados < juegosNecesarios && rivalB.juegosGanados < juegosNecesarios) {
                 if (rivalA.rondasGanadas < rondasNecesarias && rivalB.rondasGanadas < rondasNecesarias) {
                     jugarRonda();
-                    console.log(`Así queda el marcador de la ronda:
-${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.nombre}`);
+                    getCurrentRoundScore();
 
                     if (rivalA.evolucionPuntos === 'RONDA GANADA') {
                         if (rivalA.juegosGanados < 1 && rivalB.juegosGanados < 1) {
@@ -232,7 +239,8 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                             reasignarValor(rivalA, 'resultadoJuego2', rivalA.rondasGanadas);
                         } else if (rivalA.juegosGanados === 1 && rivalB.juegosGanados === 1) {
                             reasignarValor(rivalA, 'resultadoJuego3', rivalA.rondasGanadas);
-                        } else { console.log('Hola') };
+                        };
+
                         getRoundScore();
 
                     } else if (rivalB.evolucionPuntos === 'RONDA GANADA') {
@@ -243,7 +251,7 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                             reasignarValor(rivalB, 'resultadoJuego2', rivalB.rondasGanadas);
                         } else if (rivalA.juegosGanados === 1 && rivalB.juegosGanados === 1) {
                             reasignarValor(rivalB, 'resultadoJuego3', rivalB.rondasGanadas);
-                        } else { console.log('Hola') };
+                        }
                         getRoundScore();
 
                     };
@@ -252,7 +260,6 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                         (rivalB.rondasGanadas < 7 && rivalB.rondasGanadas >= rondasNecesarias && rivalB.rondasGanadas - rivalA.rondasGanadas === 1)) {
                         rondasNecesarias += 1;
                         jugarRonda();
-                        //console.log('rondas necesarias es ', rondasNecesarias)
                     };
                 } else {
                     console.log('EL JUEGO LO HA GANADO...');
