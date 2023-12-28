@@ -52,7 +52,6 @@ const createMatch = (jugadorA, jugadorB) => {
         totalPuntos: 0,
         rondasGanadas: 0,
         juegosGanados: 0,
-        partidosGanados: 0,
         resultadoJuego1: 0,
         resultadoJuego2: 0,
         resultadoJuego3: 0
@@ -65,12 +64,10 @@ const createMatch = (jugadorA, jugadorB) => {
         totalPuntos: 0,
         rondasGanadas: 0,
         juegosGanados: 0,
-        partidosGanados: 0,
         resultadoJuego1: 0,
         resultadoJuego2: 0,
         resultadoJuego3: 0
     };
-
 
     const getRoundScore = () => {
         let marcador = [
@@ -189,7 +186,7 @@ ${formatear.join('\n')}`);
                 console.log(`¡${rivalB.nombre} gana la ronda!`);
                 reasignarValor(rivalA, 'totalPuntos');
                 reasignarValor(rivalB, 'totalPuntos');
-            }
+            };
 
         } else {
             if (rivalA.totalPuntos === 4) {
@@ -204,7 +201,7 @@ ${formatear.join('\n')}`);
                 reasignarValor(rivalB, 'totalPuntos');
 
             };
-        }
+        };
 
 
     };
@@ -282,9 +279,11 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
                 //Presentar ganador del partido
                 console.log('EL PARTIDO LO HA GANADO...');
                 if (rivalA.juegosGanados > rivalB.juegosGanados) {
-                    console.log(`¡${rivalA.nombre}!`)
+                    console.log(`¡${rivalA.nombre}!`);
+                    return rivalA.nombre;
                 } else if (rivalB.juegosGanados > rivalA.juegosGanados) {
                     console.log(`¡${rivalB.nombre}!`)
+                    return rivalB.nombre;
                 };
                 // Presentar el marcador del partido
                 getRoundScore();
@@ -292,10 +291,10 @@ ${rivalA.nombre} ${rivalA.evolucionPuntos} - ${rivalB.evolucionPuntos} ${rivalB.
             };
         }
     };
-    partido();
 
+    let ganadorPartido = partido();
 
-    return [rivalA, rivalB, marcador];
+    return ganadorPartido;
 };
 
 // Torneo
@@ -309,7 +308,20 @@ console.log(`Este es el cuadro del torneo:
 Partido 1: ${cuadroTorneo[0][0]} vs. ${cuadroTorneo[0][1]}
 Partido 2: ${cuadroTorneo[1][0]} vs. ${cuadroTorneo[1][1]}`)
 
-const game = createMatch(cuadroTorneo[0][0], cuadroTorneo[0][1]);
-//const game = createMatch('Alberto C', 'David J');
-//console.log('Vamos con el primer partido', game);
+console.log('EMPIEZA LA PRIMERA SEMIFINAL')
+const game1 = createMatch(cuadroTorneo[0][0], cuadroTorneo[0][1]);
+
+console.log('EMPIEZA LA SEGUNDA SEMIFINAL')
+const game2 = createMatch(cuadroTorneo[1][0], cuadroTorneo[1][1])
+
+console.log(`
+FINAL:
+${game1} vs. ${game2} 
+`);
+
+const game3 = createMatch(game1, game2)
+
+console.log(`
+El torneo lo ha ganado...
+¡${game3}!`)
 
