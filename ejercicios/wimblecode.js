@@ -32,7 +32,7 @@ const crearPartidos = (nombre1, nombre2) => {
 const jugador = {
     id: 0,
     nombre: '',
-    evolucionPuntos: '',
+    evolucionPuntos: '0',
     totalPuntos: 0,
     rondasGanadas: 0,
     juegosGanados: 0,
@@ -66,9 +66,25 @@ const torneo = {
         torneo.parejaJugando
             .forEach(item => {
                 if (item.id === id) {
+                    console.log(`¡Punto para ${item.nombre}!`);
                     item.totalPuntos += punto;
+                    item.evolucionPuntos = (torneo.traducirPuntos(item.totalPuntos));
+                    torneo.comprobarDeuce(torneo.parejaJugando)
                 };
             });
+    },
+
+    comprobarDeuce: (lista) => {
+        const controlador = lista
+            .map(item => item.totalPuntos)
+
+        let puntuacionA = controlador[0];
+        let puntuacionB = controlador[1];
+
+        if ((puntuacionA === 3 && puntuacionB === 3)
+            || (puntuacionA === 4 && puntuacionB === 4)) {
+            return torneo.rondaIsDeuce = true;
+        };
     },
 
     traducirPuntos: (tanteo) => {
@@ -87,6 +103,16 @@ const torneo = {
                 return 'RONDA GANADA'
             };
         };
+    },
+
+    getCurrentRoundScore: () => {
+        let resultado = `Marcador ronda:
+${torneo.parejaJugando[0].nombre} ${torneo.parejaJugando[0].evolucionPuntos} - ${String(torneo.parejaJugando[1].evolucionPuntos)} ${torneo.parejaJugando[1].nombre}`;
+
+        if (torneo.rondaIsDeuce) {
+            resultado = 'Deuce'
+        }
+        return console.log(resultado)
     }
 
 };
@@ -100,8 +126,7 @@ console.log(torneo.parejaJugando);
 
 game.pointWonBy(1);
 game.pointWonBy(2);
+//game.comprobarDeuce(game.parejaJugando)
+console.log(game.rondaIsDeuce)
 
-game.parejaJugando.forEach((elemento) => {
-    console.log(game.traducirPuntos(elemento.totalPuntos))
-}
-);
+game.getCurrentRoundScore()
