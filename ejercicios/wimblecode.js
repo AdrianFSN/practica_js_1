@@ -62,12 +62,12 @@ const torneo = {
     pointWonBy: (id) => {
         let punto = 1;
 
-        parejaJugando
+        torneo.parejaJugando
             .forEach(item => {
                 if (item.id === id) {
                     item.totalPuntos += punto;
                 };
-            })
+            });
     }
 
 };
