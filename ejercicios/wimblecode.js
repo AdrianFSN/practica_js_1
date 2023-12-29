@@ -60,7 +60,7 @@ const torneo = {
 
     },
 
-    pointWonBy: (id) => {
+    pointWonBy: (id = (Math.floor(Math.random() * 2) + 1)) => {
         let punto = 1;
 
         torneo.parejaJugando
@@ -115,27 +115,6 @@ ${torneo.parejaJugando[0].nombre} ${torneo.parejaJugando[0].evolucionPuntos} - $
         return console.log(resultado)
     },
 
-
-    /* const getRoundScore = () => {
-        let marcador = [
-            [' ', 'Rondas J1', 'Rondas J2', 'Rondas J3', 'Juegos'],
-            [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.resultadoJuego3, rivalA.juegosGanados],
-            [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.resultadoJuego3, rivalB.juegosGanados],
-        ];
-
-        let formatear = marcador
-            .map((elemento) => elemento
-                .map((item) => String(item)
-                    .padStart(10)).join(' '));
-
-
-        return console.log(`
-Marcador partido: ---------------------------------------------->
-${formatear.join('\n')}`);
-
-    }; */
-
-
     getRoundScore: () => {
         let marcador = [
             [' ', 'Rondas J1', 'Rondas J2', 'Rondas J3', 'Juegos']
@@ -171,8 +150,9 @@ console.log(game);
 game.createMatch('Alberto C', 'David J');
 console.log(torneo.parejaJugando);
 
-game.pointWonBy(1);
-game.pointWonBy(2);
+//game.pointWonBy(1);
+//game.pointWonBy(2);
+game.pointWonBy();
 
 console.log(game.rondaIsDeuce);
 
