@@ -113,6 +113,53 @@ ${torneo.parejaJugando[0].nombre} ${torneo.parejaJugando[0].evolucionPuntos} - $
             resultado = 'Deuce'
         }
         return console.log(resultado)
+    },
+
+
+    /* const getRoundScore = () => {
+        let marcador = [
+            [' ', 'Rondas J1', 'Rondas J2', 'Rondas J3', 'Juegos'],
+            [rivalA.nombre, rivalA.resultadoJuego1, rivalA.resultadoJuego2, rivalA.resultadoJuego3, rivalA.juegosGanados],
+            [rivalB.nombre, rivalB.resultadoJuego1, rivalB.resultadoJuego2, rivalB.resultadoJuego3, rivalB.juegosGanados],
+        ];
+
+        let formatear = marcador
+            .map((elemento) => elemento
+                .map((item) => String(item)
+                    .padStart(10)).join(' '));
+
+
+        return console.log(`
+Marcador partido: ---------------------------------------------->
+${formatear.join('\n')}`);
+
+    }; */
+
+
+    getRoundScore: () => {
+        let marcador = [
+            [' ', 'Rondas J1', 'Rondas J2', 'Rondas J3', 'Juegos']
+        ]
+
+        torneo.parejaJugando.forEach(item => {
+            let listaConJugador = [
+                item.nombre,
+                item.resultadoJuego1,
+                item.resultadoJuego2,
+                item.resultadoJuego3,
+                item.juegosGanados
+            ];
+            marcador.push(listaConJugador)
+        })
+        let formatear = marcador
+            .map((elemento) => elemento
+                .map((item) => String(item)
+                    .padStart(10)).join(' '));
+
+
+        console.log(`
+Marcador partido: ---------------------------------------------->
+${formatear.join('\n')}`);
     }
 
 };
@@ -126,7 +173,9 @@ console.log(torneo.parejaJugando);
 
 game.pointWonBy(1);
 game.pointWonBy(2);
-//game.comprobarDeuce(game.parejaJugando)
-console.log(game.rondaIsDeuce)
 
-game.getCurrentRoundScore()
+console.log(game.rondaIsDeuce);
+
+game.getCurrentRoundScore();
+game.rondaIsDeuce = false;
+game.getRoundScore();
