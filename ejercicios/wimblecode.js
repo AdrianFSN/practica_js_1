@@ -148,7 +148,7 @@ ${formatear.join('\n')}`);
     },
 
     playRound: (player1, player2) => {
-        console.log(`Empieza un nuevo punto entre ${player1} y ${player2}...`);
+        console.log(`Empieza una nueva RONDA entre ${player1} y ${player2}...`);
         console.log(`Está siendo un peloteo vibrante...`);
         game.pointWonBy();
         game.getCurrentRoundScore();
@@ -185,7 +185,27 @@ ${formatear.join('\n')}`);
         });
     },
 
-    playGame: () => { }
+    playJuego: (player1, player2) => {
+        console.log(`¡Comienza un nuevo JUEGO entre ${player1} y ${player2}!`);
+
+        let rondasNecesarias = 4;
+        let salir = false;
+        while (!salir) {
+            let comprobarRondas = torneo.parejaJugando
+                .filter(element => element.rondasGanadas < rondasNecesarias);
+            //console.log(comprobarRondas)
+            if (comprobarRondas.length === 2) {
+                torneo.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+            } else {
+                console.log(comprobarRondas.length)
+                salir = true
+            }
+        }
+
+
+
+
+    }
 
 };
 
@@ -194,7 +214,7 @@ const game = torneo;
 console.log(game);
 
 game.createMatch('Alberto C', 'David J');
-console.log(torneo.parejaJugando);
+//console.log(torneo.parejaJugando);
 
 /* game.pointWonBy(1);
 game.getCurrentRoundScore();
@@ -206,7 +226,7 @@ console.log(game.parejaJugando); */
 
 //game.getRoundScore();
 console.log(game.rondaIsDeuce);
-game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+game.playJuego(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
 
 
 
