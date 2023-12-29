@@ -167,46 +167,64 @@ ${formatear.join('\n')}`);
                     };
 
                 } else if (player.totalPuntos === 5) {
-                    console.log(`¡Ronda ganada por ${player.nombre}`);
+                    console.log(`¡Ronda ganada por ${player.nombre}!`);
                     player.rondasGanadas++;
-                    torneo.parejaJugando.forEach(item => {
-                        torneo.reasignarValor(item, 'totalPuntos');
-                        torneo.reasignarValor(item, 'evolucionPuntos', '0');
-                    })
-                    torneo.getRoundScore();
-                };
-            } else {
-                if (player.totalPuntos === 4) {
-                    console.log(`¡Ronda ganada por ${player.nombre}`);
-                    player.rondasGanadas++;
-                    torneo.parejaJugando.forEach(item => {
+                    for (let i = 0; i < torneo.parejaJugando.length; i++) {
+                        const jugadorActual = torneo.parejaJugando[i];
 
+                        if (jugadorActual.evolucionPuntos === 'RONDA GANADA') {
+                            const otroJugador = torneo.parejaJugando[(i + 1) % 2];
 
-                        if (torneo.parejaJugando[0].evolucionPuntos === 'RONDA GANADA') {
-                            if (torneo.parejaJugando[0].juegosGanados < 1 && torneo.parejaJugando[1].juegosGanados < 1) {
-                                torneo.reasignarValor(torneo.parejaJugando[0], 'resultadoJuego1', torneo.parejaJugando[0].rondasGanadas);
-                            } else if ((torneo.parejaJugando[0].juegosGanados === 1 && torneo.parejaJugando[1].juegosGanados === 0)
-                                || (torneo.parejaJugando[0].juegosGanados === 0 && torneo.parejaJugando[1].juegosGanados === 1)) {
-                                torneo.reasignarValor(torneo.parejaJugando[0], 'resultadoJuego2', torneo.parejaJugando[0].rondasGanadas);
-                            } else if (torneo.parejaJugando[0].juegosGanados === 1 && torneo.parejaJugando[1].juegosGanados === 1) {
-                                torneo.reasignarValor(torneo.parejaJugando[0], 'resultadoJuego3', torneo.parejaJugando[1].rondasGanadas);
-                            };
-                            torneo.getRoundScore();
+                            if (jugadorActual.juegosGanados < 1 && otroJugador.juegosGanados < 1) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego1', jugadorActual.rondasGanadas);
+                            } else if ((jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 0)
+                                || (jugadorActual.juegosGanados === 0 && otroJugador.juegosGanados === 1)) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego2', jugadorActual.rondasGanadas);
+                            } else if (jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 1) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego3', otroJugador.rondasGanadas);
+                            }
 
-                        } else if (torneo.parejaJugando[1].evolucionPuntos === 'RONDA GANADA') {
-                            if (torneo.parejaJugando[1].juegosGanados < 1 && torneo.parejaJugando[0].juegosGanados < 1) {
-                                torneo.reasignarValor(torneo.parejaJugando[1], 'resultadoJuego1', torneo.parejaJugando[1].rondasGanadas);
-                            } else if ((torneo.parejaJugando[1].juegosGanados === 1 && torneo.parejaJugando[0].juegosGanados === 0)
-                                || (torneo.parejaJugando[1].juegosGanados === 0 && torneo.parejaJugando[0].juegosGanados === 1)) {
-                                torneo.reasignarValor(torneo.parejaJugando[1], 'resultadoJuego2', torneo.parejaJugando[1].rondasGanadas);
-                            } else if (torneo.parejaJugando[1].juegosGanados === 1 && torneo.parejaJugando[0].juegosGanados === 1) {
-                                torneo.reasignarValor(torneo.parejaJugando[1], 'resultadoJuego3', torneo.parejaJugando[0].rondasGanadas);
-                            };
                             torneo.getRoundScore();
                         }
+                    }
+
+                    torneo.parejaJugando.forEach(item => {
+                        torneo.reasignarValor(item, 'totalPuntos');
+                        torneo.reasignarValor(item, 'evolucionPuntos', '0');
+                        //torneo.rondaIsDeuce = false
+                    })
+                };
+
+            } else {
+                if (player.totalPuntos === 4) {
+                    console.log(`¡Ronda ganada por ${player.nombre}!`);
+                    player.rondasGanadas++;
+
+
+                    for (let i = 0; i < torneo.parejaJugando.length; i++) {
+                        const jugadorActual = torneo.parejaJugando[i];
+
+                        if (jugadorActual.evolucionPuntos === 'RONDA GANADA') {
+                            const otroJugador = torneo.parejaJugando[(i + 1) % 2];
+
+                            if (jugadorActual.juegosGanados < 1 && otroJugador.juegosGanados < 1) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego1', jugadorActual.rondasGanadas);
+                            } else if ((jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 0)
+                                || (jugadorActual.juegosGanados === 0 && otroJugador.juegosGanados === 1)) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego2', jugadorActual.rondasGanadas);
+                            } else if (jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 1) {
+                                torneo.reasignarValor(jugadorActual, 'resultadoJuego3', otroJugador.rondasGanadas);
+                            }
+
+                            torneo.getRoundScore();
+                        }
+                    }
+
+                    torneo.parejaJugando.forEach(item => {
                         torneo.reasignarValor(item, 'totalPuntos');
                         torneo.reasignarValor(item, 'evolucionPuntos', '0');
                     })
+
 
                 };
             };
@@ -225,19 +243,23 @@ ${formatear.join('\n')}`);
             //console.log(comprobarRondas)
             if (comprobarRondas.length === 2) {
                 torneo.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+                torneo.rondaIsDeuce = false
             } else {
                 torneo.parejaJugando.forEach(item => {
                     if (item.rondasGanadas === rondasNecesarias) {
+                        console.log(`¡${item.nombre} ha ganado el JUEGO!`)
                         item.juegosGanados++;
+                        torneo.getRoundScore();
                         rondasNecesarias = 4;
+                        torneo.reasignarValor(item, 'rondasGanadas')
                         console.log(comprobarRondas.length);
                         salir = true
                     };
                 });
             };
-            if ((torneo.parejaJugando[0].rondasGanadas < 7 && torneo.parejaJugando[0].rondasGanadas - torneo.parejaJugando[1].rondasGanadas === 1)
-                || (torneo.parejaJugando[1].rondasGanadas < 7 && torneo.parejaJugando[1].rondasGanadas - torneo.parejaJugando[0].rondasGanadas === 1)) {
-                rondasNecesarias++
+            if ((torneo.parejaJugando[0].rondasGanadas < 7 && torneo.parejaJugando[0].rondasGanadas >= rondasNecesarias && torneo.parejaJugando[0].rondasGanadas - torneo.parejaJugando[1].rondasGanadas === 1) ||
+                (torneo.parejaJugando[1].rondasGanadas < 7 && torneo.parejaJugando[1].rondasGanadas >= rondasNecesarias && torneo.parejaJugando[1].rondasGanadas - torneo.parejaJugando[0].rondasGanadas === 1)) {
+                rondasNecesarias++;
             };
         }
 
