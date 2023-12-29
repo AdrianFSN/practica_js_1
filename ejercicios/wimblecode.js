@@ -139,6 +139,30 @@ ${torneo.parejaJugando[0].nombre} ${torneo.parejaJugando[0].evolucionPuntos} - $
         console.log(`
 Marcador partido: ---------------------------------------------->
 ${formatear.join('\n')}`);
+    },
+
+    reasignarValor: (jugador, parametro, valor = 0) => {
+        jugador[parametro] = valor;
+    },
+
+    playRound: (player1, player2) => {
+        console.log(`Empieza un nuevo punto entre ${player1} y ${player2}...`);
+        console.log(`Está siendo un peloteo vibrante...`);
+        game.pointWonBy();
+        console.log('Esto es parejaJugando dentro de la ronda', torneo.parejaJugando)
+        torneo.parejaJugando.forEach(player => {
+            if (player.totalPuntos === 4) {
+                console.log(`¡Ronda ganada por ${player.nombre}`)
+                player.rondasGanadas += 1;
+                torneo.parejaJugando.forEach(item => {
+                    console.log('Esto es item total puntos', item.totalPuntos);
+                    torneo.reasignarValor(item, 'totalPuntos');
+                    torneo.reasignarValor(item, 'evolucionPuntos', '0');
+                    console.log('Esto es item evolucion de puntos', item.evolucionPuntos);
+                })
+            }
+        });
+        console.log('Esto es parejaJugando al salir de PlayRound', torneo.parejaJugando)
     }
 
 };
@@ -152,10 +176,12 @@ console.log(torneo.parejaJugando);
 
 //game.pointWonBy(1);
 //game.pointWonBy(2);
-game.pointWonBy();
+game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+
 
 console.log(game.rondaIsDeuce);
 
 game.getCurrentRoundScore();
-game.rondaIsDeuce = false;
+//game.rondaIsDeuce = false;
 game.getRoundScore();
+game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
