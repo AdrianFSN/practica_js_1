@@ -60,7 +60,7 @@ const torneo = {
 
     },
 
-    pointWonBy: (id = (Math.floor(Math.random() * 2) + 1)) => {
+    pointWonBy: (id = 2) => {
         let punto = 1;
 
         torneo.parejaJugando
@@ -84,6 +84,8 @@ const torneo = {
         if ((puntuacionA === 3 && puntuacionB === 3)
             || (puntuacionA === 4 && puntuacionB === 4)) {
             return torneo.rondaIsDeuce = true;
+        } else {
+            return false;
         };
     },
 
@@ -149,21 +151,41 @@ ${formatear.join('\n')}`);
         console.log(`Empieza un nuevo punto entre ${player1} y ${player2}...`);
         console.log(`Está siendo un peloteo vibrante...`);
         game.pointWonBy();
-        console.log('Esto es parejaJugando dentro de la ronda', torneo.parejaJugando)
+        game.getCurrentRoundScore();
+
         torneo.parejaJugando.forEach(player => {
-            if (player.totalPuntos === 4) {
-                console.log(`¡Ronda ganada por ${player.nombre}`)
-                player.rondasGanadas += 1;
-                torneo.parejaJugando.forEach(item => {
-                    console.log('Esto es item total puntos', item.totalPuntos);
-                    torneo.reasignarValor(item, 'totalPuntos');
-                    torneo.reasignarValor(item, 'evolucionPuntos', '0');
-                    console.log('Esto es item evolucion de puntos', item.evolucionPuntos);
-                })
-            }
+
+            if (torneo.comprobarDeuce(torneo.parejaJugando)) {
+                if (torneo.parejaJugando[0].totalPuntos !== 5 && torneo.parejaJugando[1].totalPuntos !== 5) {
+                    if (torneo.parejaJugando[0].totalPuntos === 4 && torneo.parejaJugando[1].totalPuntos === 4) {
+                        player.totalPuntos--;
+                    };
+
+                } else if (player.totalPuntos === 5) {
+                    console.log(`¡Ronda ganada por ${player.nombre}`);
+                    player.rondasGanadas++;
+                    torneo.parejaJugando.forEach(item => {
+                        torneo.reasignarValor(item, 'totalPuntos');
+                        torneo.reasignarValor(item, 'evolucionPuntos', '0');
+                    })
+                    torneo.getRoundScore();
+                };
+            } else {
+                if (player.totalPuntos === 4) {
+                    console.log(`¡Ronda ganada por ${player.nombre}`);
+                    player.rondasGanadas++;
+                    torneo.parejaJugando.forEach(item => {
+                        torneo.reasignarValor(item, 'totalPuntos');
+                        torneo.reasignarValor(item, 'evolucionPuntos', '0');
+                    })
+                    torneo.getRoundScore();
+                };
+            };
+
         });
-        console.log('Esto es parejaJugando al salir de PlayRound', torneo.parejaJugando)
-    }
+    },
+
+    playGame: () => { }
 
 };
 
@@ -174,14 +196,17 @@ console.log(game);
 game.createMatch('Alberto C', 'David J');
 console.log(torneo.parejaJugando);
 
-//game.pointWonBy(1);
-//game.pointWonBy(2);
-game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
-
-
-console.log(game.rondaIsDeuce);
-
+/* game.pointWonBy(1);
 game.getCurrentRoundScore();
-//game.rondaIsDeuce = false;
-game.getRoundScore();
+console.log(game.rondaIsDeuce);
+console.log(game.parejaJugando); */
+//game.pointWonBy(2);
+//game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+
+
+//game.getRoundScore();
+console.log(game.rondaIsDeuce);
 game.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+
+
+
