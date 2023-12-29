@@ -46,6 +46,7 @@ const jugador = {
 const torneo = {
     listaJugadoresInscritos: listaJugadoresDisponibles,
     parejaJugando: undefined,
+    rondaIsDeuce: false,
     createMatch: (nombre1, nombre2) => {
         const rivalA = Object.assign({}, jugador);
         const rivalB = Object.assign({}, jugador);
@@ -68,6 +69,24 @@ const torneo = {
                     item.totalPuntos += punto;
                 };
             });
+    },
+
+    traducirPuntos: (tanteo) => {
+        if (tanteo === 0) {
+            return '0';
+        } else if (tanteo === 1) {
+            return '15';
+        } else if (tanteo === 2) {
+            return '30';
+        } else if (tanteo === 3) {
+            return '40';
+        } else if (tanteo === 4) {
+            if (torneo.rondaIsDeuce) {
+                return 'Ventaja'
+            } else {
+                return 'RONDA GANADA'
+            };
+        };
     }
 
 };
@@ -78,3 +97,11 @@ console.log(game);
 
 game.createMatch('Alberto C', 'David J');
 console.log(torneo.parejaJugando);
+
+game.pointWonBy(1);
+game.pointWonBy(2);
+
+game.parejaJugando.forEach((elemento) => {
+    console.log(game.traducirPuntos(elemento.totalPuntos))
+}
+);
