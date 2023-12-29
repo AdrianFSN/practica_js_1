@@ -19,15 +19,6 @@ const crearEmparejamientos = (lista) => {
     return listaParejas;
 };
 
-/* const crearPartidos = (nombre1, nombre2) => {
-    const rivalA = Object.assign({}, jugador);
-    const rivalB = Object.assign({}, jugador);
-
-    rivalA.nombre = nombre1;
-    rivalB.nombre = nombre2;
-
-} */
-
 // Objeto jugador
 const jugador = {
     id: 0,
@@ -161,39 +152,47 @@ ${formatear.join('\n')}`);
         torneo.parejaJugando.forEach(player => {
 
             if (torneo.comprobarDeuce(torneo.parejaJugando)) {
-                if (torneo.parejaJugando[0].totalPuntos !== 5 && torneo.parejaJugando[1].totalPuntos !== 5) {
+                while (torneo.parejaJugando[0].totalPuntos !== 5 && torneo.parejaJugando[1].totalPuntos !== 5) {
+                    torneo.pointWonBy();
+                    torneo.parejaJugando.forEach((item) => {
+                        if (item.totalPuntos === 4) {
+                            console.log(`Ventaja para ${item.nombre}`)
+                        }
+                    })
                     if (torneo.parejaJugando[0].totalPuntos === 4 && torneo.parejaJugando[1].totalPuntos === 4) {
                         player.totalPuntos--;
                     };
 
-                } else if (player.totalPuntos === 5) {
-                    console.log(`¡Ronda ganada por ${player.nombre}!`);
-                    player.rondasGanadas++;
-                    for (let i = 0; i < torneo.parejaJugando.length; i++) {
-                        const jugadorActual = torneo.parejaJugando[i];
-
-                        if (jugadorActual.evolucionPuntos === 'RONDA GANADA') {
-                            const otroJugador = torneo.parejaJugando[(i + 1) % 2];
-
-                            if (jugadorActual.juegosGanados < 1 && otroJugador.juegosGanados < 1) {
-                                torneo.reasignarValor(jugadorActual, 'resultadoJuego1', jugadorActual.rondasGanadas);
-                            } else if ((jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 0)
-                                || (jugadorActual.juegosGanados === 0 && otroJugador.juegosGanados === 1)) {
-                                torneo.reasignarValor(jugadorActual, 'resultadoJuego2', jugadorActual.rondasGanadas);
-                            } else if (jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 1) {
-                                torneo.reasignarValor(jugadorActual, 'resultadoJuego3', otroJugador.rondasGanadas);
-                            }
-
-                            torneo.getRoundScore();
-                        }
-                    }
-
-                    torneo.parejaJugando.forEach(item => {
-                        torneo.reasignarValor(item, 'totalPuntos');
-                        torneo.reasignarValor(item, 'evolucionPuntos', '0');
-                        //torneo.rondaIsDeuce = false
-                    })
                 };
+            };
+
+            if (player.totalPuntos === 5) {
+                console.log(`¡Ronda ganada por ${player.nombre}!`);
+                player.rondasGanadas++;
+                for (let i = 0; i < torneo.parejaJugando.length; i++) {
+                    const jugadorActual = torneo.parejaJugando[i];
+
+                    if (jugadorActual.evolucionPuntos === 'RONDA GANADA') {
+                        const otroJugador = torneo.parejaJugando[(i + 1) % 2];
+
+                        if (jugadorActual.juegosGanados < 1 && otroJugador.juegosGanados < 1) {
+                            torneo.reasignarValor(jugadorActual, 'resultadoJuego1', jugadorActual.rondasGanadas);
+                        } else if ((jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 0)
+                            || (jugadorActual.juegosGanados === 0 && otroJugador.juegosGanados === 1)) {
+                            torneo.reasignarValor(jugadorActual, 'resultadoJuego2', jugadorActual.rondasGanadas);
+                        } else if (jugadorActual.juegosGanados === 1 && otroJugador.juegosGanados === 1) {
+                            torneo.reasignarValor(jugadorActual, 'resultadoJuego3', otroJugador.rondasGanadas);
+                        }
+                        torneo.getRoundScore();
+                        torneo.parejaJugando.forEach(item => {
+                            torneo.reasignarValor(item, 'totalPuntos');
+                            torneo.reasignarValor(item, 'evolucionPuntos', '0');
+                            //torneo.rondaIsDeuce = false
+                        })
+
+                    }
+                }
+
 
             } else {
                 if (player.totalPuntos === 4) {
