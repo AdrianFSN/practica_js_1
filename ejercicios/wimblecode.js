@@ -261,23 +261,33 @@ ${formatear.join('\n')}`);
 
     },
 
-    playJuego: (player1, player2) => {
+    playJuego: (listaJugando) => {
+        const player1 = listaJugando[0];
+        const player2 = listaJugando[1];
+
         console.log(`¡Comienza un nuevo JUEGO entre ${player1} y ${player2}!`);
 
         let rondasNecesarias = 4;
         let salir = false;
         while (!salir) {
-            let comprobarRondas = torneo.parejaJugando
+            let comprobarRondas = listaJugando
                 .filter(element => element.rondasGanadas < rondasNecesarias);
             //console.log(comprobarRondas)
             if (comprobarRondas.length === 2) {
-                torneo.playRound(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
-                torneo.rondaIsDeuce = false
+                torneo.playRound(listaJugando);
+                //torneo.rondaIsDeuce = false
             } else {
-                torneo.parejaJugando.forEach(item => {
+                listaJugando.forEach(item => {
                     if (item.rondasGanadas === rondasNecesarias) {
                         console.log(`¡${item.nombre} ha ganado el JUEGO!`)
                         item.juegosGanados++;
+
+                        if (player1.rondasGanadas === rondasNecesarias) {
+                            torneo.updateScoreboard(player1, player2);
+                        } else if (player2.rondasGanadas === rondasNecesarias) {
+                            torneo.updateScoreboard(player2, player1);
+                        };
+
                         torneo.getRoundScore();
                         rondasNecesarias = 4;
                         torneo.reasignarValor(item, 'rondasGanadas')
@@ -286,8 +296,8 @@ ${formatear.join('\n')}`);
                     };
                 });
             };
-            if ((torneo.parejaJugando[0].rondasGanadas < 7 && torneo.parejaJugando[0].rondasGanadas >= rondasNecesarias && torneo.parejaJugando[0].rondasGanadas - torneo.parejaJugando[1].rondasGanadas === 1) ||
-                (torneo.parejaJugando[1].rondasGanadas < 7 && torneo.parejaJugando[1].rondasGanadas >= rondasNecesarias && torneo.parejaJugando[1].rondasGanadas - torneo.parejaJugando[0].rondasGanadas === 1)) {
+            if ((player1.rondasGanadas < 7 && player1.rondasGanadas >= rondasNecesarias && player1.rondasGanadas - player2.rondasGanadas === 1) ||
+                (player2.rondasGanadas < 7 && player2.rondasGanadas >= rondasNecesarias && player2.rondasGanadas - player1.rondasGanadas === 1)) {
                 rondasNecesarias++;
             };
         };
