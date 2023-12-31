@@ -139,7 +139,7 @@ ${torneo.parejaJugando[0].nombre} ${torneo.parejaJugando[0].evolucionPuntos} - $
         let formatear = marcador
             .map((elemento) => elemento
                 .map((item) => String(item)
-                    .padStart(10)).join(' '));
+                    .padStart(12)).join(' '));
 
 
         console.log(`
@@ -329,12 +329,34 @@ while (!exit) {
     const game2 = torneo;
     const final = torneo;
 
+    const clasificadosFinal = [];
+
     game1.createMatch('Alberto C', 'David J');
     game1.playMatch(game1.parejaJugando);
     console.log(`
     El ganador de la PRIMERA SEMIFINAL es -------------------------------->: 
     ${game1.getWinner()}
     `);
+    clasificadosFinal.push(game1.getWinner());
+
+    game2.createMatch('Javier M', 'Edu Aguilar');
+    game2.playMatch(game2.parejaJugando);
+    console.log(`
+    El ganador de la SEGUNDA SEMIFINAL es -------------------------------->: 
+    ${game2.getWinner()}
+    `);
+    clasificadosFinal.push(game2.getWinner());
+
+
+
+    final.createMatch(clasificadosFinal[0], clasificadosFinal[1]);
+    final.playMatch(final.parejaJugando);
+    console.log(`
+    El ganador de la FINAL es -------------------------------->: 
+    ${final.getWinner()}
+    `);
+
+
     exit = true;
 
 };
