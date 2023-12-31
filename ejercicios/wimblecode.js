@@ -282,12 +282,12 @@ ${formatear.join('\n')}`);
                         console.log(`#################### ¡${item.nombre} ha ganado el JUEGO! ####################`)
                         item.juegosGanados++;
 
-                        torneo.getRoundScore();
-                        if (player1.rondasGanadas === rondasNecesarias) {
+                        /* if (player1.rondasGanadas === rondasNecesarias) {
                             torneo.updateScoreboard(player1, player2);
                         } else if (player2.rondasGanadas === rondasNecesarias) {
                             torneo.updateScoreboard(player2, player1);
-                        };
+                        }; */
+                        torneo.getRoundScore();
 
                         rondasNecesarias = 4;
                         torneo.reasignarValor(player1, 'rondasGanadas')
