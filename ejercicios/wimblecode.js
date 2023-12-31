@@ -183,8 +183,8 @@ ${formatear.join('\n')}`);
         const player1 = listaJugando[0];
         const player2 = listaJugando[1];
         let endRound = false;
-        torneo.getCurrentRoundScore();
         console.log(`Empieza una nueva RONDA entre ${player1.nombre} y ${player2.nombre}...`);
+        torneo.getCurrentRoundScore();
         console.log(`Está siendo un peloteo vibrante...`);
 
         while (!endRound) {
@@ -265,7 +265,7 @@ ${formatear.join('\n')}`);
         const player1 = listaJugando[0];
         const player2 = listaJugando[1];
 
-        console.log(`¡Comienza un nuevo JUEGO entre ${player1} y ${player2}!`);
+        console.log(`¡Comienza un nuevo JUEGO entre ${player1.nombre} y ${player2.nombre}!`);
 
         let rondasNecesarias = 4;
         let salir = false;
@@ -301,6 +301,39 @@ ${formatear.join('\n')}`);
                 rondasNecesarias++;
             };
         };
+    },
+
+    playMatch: (listaJugando) => {
+        const player1 = listaJugando[0];
+        const player2 = listaJugando[1];
+
+        console.log(`¡Comienza un nuevo PARTIDO entre ${player1.nombre} y ${player2.nombre}!`);
+
+        let juegosNecesarios = 2;
+        let salir = false;
+
+        while (!salir) {
+            if (player1.juegosGanados < juegosNecesarios && player2.juegosGanados < juegosNecesarios) {
+                torneo.playJuego(listaJugando);
+            } else {
+                listaJugando.forEach(item => {
+                    if (item.juegosGanados === juegosNecesarios) {
+                        console.log(`¡${item.nombre} ha ganado el PARTIDO!`)
+
+                        if (player1.juegosGanados === juegosNecesarios) {
+                            torneo.updateScoreboard(player1, player2);
+                        } else if (player2.juegosNecesarios === juegosNecesarios) {
+                            torneo.updateScoreboard(player2, player1);
+                        };
+
+                        torneo.getRoundScore();
+                        torneo.reasignarValor(item, 'juegosGanados')
+                        //torneo.reasignarValor(item, 'juegosGanados')
+                        salir = true
+                    };
+                });
+            };
+        }
     }
 };
 
