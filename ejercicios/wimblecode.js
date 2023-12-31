@@ -231,7 +231,6 @@ ${formatear.join('\n')}`);
                             torneo.reasignarValor(jugador, 'totalPuntos');
                             torneo.reasignarValor(jugador, 'evolucionPuntos', '0');
                         })
-                        //console.log(torneo.parejaJugando);
                         endRound = true;
                     };
 
@@ -257,7 +256,6 @@ ${formatear.join('\n')}`);
                             torneo.reasignarValor(jugador, 'totalPuntos');
                             torneo.reasignarValor(jugador, 'evolucionPuntos', '0');
                         })
-                        //console.log(torneo.parejaJugando);
                         endRound = true;
                     };
 
@@ -286,10 +284,8 @@ ${formatear.join('\n')}`);
                 rondasNecesarias++;
             };
 
-            //console.log(comprobarRondas)
             if (comprobarRondas.length === 2) {
                 torneo.playRound(listaJugando);
-                //torneo.rondaIsDeuce = false
             } else {
                 listaJugando.forEach(item => {
                     if (item.rondasGanadas === rondasNecesarias) {
@@ -357,9 +353,15 @@ ${jugadoresInscritos.join('\n')}
 Puedes iniciar el torneo.`);
 
     const cuadroTorneo = crearEmparejamientos(jugadoresInscritos);
+
+    let rivalA = cuadroTorneo[0][0];
+    let rivalB = cuadroTorneo[0][1];
+    let rivalC = cuadroTorneo[1][0];
+    let rivalD = cuadroTorneo[1][1];
+
     console.log(`Este es el cuadro del torneo:
-Partido 1: ${cuadroTorneo[0][0]} vs. ${cuadroTorneo[0][1]}
-Partido 2: ${cuadroTorneo[1][0]} vs. ${cuadroTorneo[1][1]}`)
+Partido 1: ${rivalA} vs. ${rivalB}
+Partido 2: ${rivalC} vs. ${rivalD}`)
 
     const game1 = torneo;
     const game2 = torneo;
