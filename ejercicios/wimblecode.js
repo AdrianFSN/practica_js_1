@@ -2,6 +2,29 @@ const NUM_JUGADORES_NECESARIOS = 4;
 let listaJugadoresDisponibles = ['Alberto C', 'David J', 'Javier M', 'Edu Aguilar'];
 
 // Métodos
+const inscribirJugadores = (numParticipantes = NUM_JUGADORES_NECESARIOS) => {
+    let listaJugadores = [];
+    while (listaJugadores.length < numParticipantes) {
+        let nombreJugador = prompt('Introduce un nombre para el jugador: ');
+        listaJugadores.push(nombreJugador);
+    }
+    if (listaJugadores.length === numParticipantes) {
+        return listaJugadores;
+    }
+};
+
+const formarParejas = (pareja, lista) => {
+    let pointerPareja = 0;
+    while (pointerPareja < 2) {
+        let index = Math.floor(Math.random() * NUM_JUGADORES_NECESARIOS);
+        if (!pareja.includes(lista[index]) && index < lista.length) {
+            pareja.push(lista[index]);
+            pointerPareja += 1;
+        }
+    }
+    return pareja;
+};
+
 const crearEmparejamientos = (lista) => {
     let copiaLista = lista.slice();
     let listaParejas = [];
@@ -208,7 +231,7 @@ ${formatear.join('\n')}`);
                             torneo.reasignarValor(jugador, 'totalPuntos');
                             torneo.reasignarValor(jugador, 'evolucionPuntos', '0');
                         })
-                        console.log(torneo.parejaJugando);
+                        //console.log(torneo.parejaJugando);
                         endRound = true;
                     };
 
@@ -270,7 +293,7 @@ ${formatear.join('\n')}`);
             } else {
                 listaJugando.forEach(item => {
                     if (item.rondasGanadas === rondasNecesarias) {
-                        console.log(`#################### ¡${item.nombre} ha ganado el JUEGO! ####################`)
+                        console.log(`#################### ¡${item.nombre.toUpperCase()} ha ganado el JUEGO! ####################`)
                         item.juegosGanados++;
                         torneo.getRoundScore();
 
@@ -298,7 +321,7 @@ ${formatear.join('\n')}`);
             } else {
                 listaJugando.forEach(item => {
                     if (item.juegosGanados === juegosNecesarios) {
-                        console.log(`******************** ¡${item.nombre} ha ganado el PARTIDO! ********************`)
+                        console.log(`******************** ¡${item.nombre.toUpperCase()} ha ganado el PARTIDO! ********************`)
 
                         if (player1.juegosGanados === juegosNecesarios) {
                             torneo.updateScoreboard(player1, player2);
@@ -324,14 +347,27 @@ ${formatear.join('\n')}`);
 
 let exit = false;
 
+// Desarrollo del torneo automático
+
 while (!exit) {
+
+    const jugadoresInscritos = inscribirJugadores(); // deben ser 4
+    console.log(`Has inscrito a 4 jugadores: 
+${jugadoresInscritos.join('\n')}
+Puedes iniciar el torneo.`);
+
+    const cuadroTorneo = crearEmparejamientos(jugadoresInscritos);
+    console.log(`Este es el cuadro del torneo:
+Partido 1: ${cuadroTorneo[0][0]} vs. ${cuadroTorneo[0][1]}
+Partido 2: ${cuadroTorneo[1][0]} vs. ${cuadroTorneo[1][1]}`)
+
     const game1 = torneo;
     const game2 = torneo;
     const final = torneo;
 
     const clasificadosFinal = [];
 
-    game1.createMatch('Alberto C', 'David J');
+    game1.createMatch(cuadroTorneo[0][0], cuadroTorneo[0][1]);
     game1.playMatch(game1.parejaJugando);
     console.log(`
     El ganador de la PRIMERA SEMIFINAL es -------------------------------->: 
@@ -339,7 +375,7 @@ while (!exit) {
     `);
     clasificadosFinal.push(game1.getWinner());
 
-    game2.createMatch('Javier M', 'Edu Aguilar');
+    game2.createMatch(cuadroTorneo[1][0], cuadroTorneo[1][1]);
     game2.playMatch(game2.parejaJugando);
     console.log(`
     El ganador de la SEGUNDA SEMIFINAL es -------------------------------->: 
@@ -352,22 +388,12 @@ while (!exit) {
     final.createMatch(clasificadosFinal[0], clasificadosFinal[1]);
     final.playMatch(final.parejaJugando);
     console.log(`
-    El ganador de la FINAL es -------------------------------->: 
-    ${final.getWinner()}
+    **********########## El ganador de la FINAL es **********##########: 
+    ${final.getWinner().toUpperCase()}
     `);
 
 
     exit = true;
 
 };
-
-
-//game.asignarRivalIndex(torneo.parejaJugando[0], torneo.parejaJugando[1])
-
-//game.getRoundScore();
-/* console.log(game.rondaIsDeuce);
-console.log(game.comprobarDeuce(torneo.parejaJugando));
-//game.playJuego(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre); */
-
-
 
