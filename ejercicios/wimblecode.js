@@ -38,6 +38,7 @@ const torneo = {
     listaJugadoresInscritos: listaJugadoresDisponibles,
     parejaJugando: undefined,
     rondaIsDeuce: false,
+    winner: '',
     createMatch: (nombre1, nombre2) => {
         const rivalA = Object.assign({}, jugador);
         const rivalB = Object.assign({}, jugador);
@@ -107,22 +108,6 @@ const torneo = {
         } else if (tanteo === 5) {
             torneo.flagTraducirDeuce = false;
             return 'RONDA GANADA'
-        }
-    },
-
-    traducirPuntosDeuce: (tanteo) => {
-        if (tanteo === 0) {
-            return '0';
-        } else if (tanteo === 1) {
-            return '15';
-        } else if (tanteo === 2) {
-            return '30';
-        } else if (tanteo === 3) {
-            return '40';
-        } else if (tanteo === 4) {
-            return 'Ventaja'
-        } else if (tanteo === 5) {
-            return 'RONDA GANADA DESDE DEUCE'
         }
     },
 
@@ -272,6 +257,12 @@ ${formatear.join('\n')}`);
         while (!salir) {
             let comprobarRondas = listaJugando
                 .filter(element => element.rondasGanadas < rondasNecesarias);
+
+            if ((player1.rondasGanadas < 7 && player1.rondasGanadas >= rondasNecesarias && player1.rondasGanadas - player2.rondasGanadas < 2) ||
+                (player2.rondasGanadas < 7 && player2.rondasGanadas >= rondasNecesarias && player2.rondasGanadas - player1.rondasGanadas < 2)) {
+                rondasNecesarias++;
+            };
+
             //console.log(comprobarRondas)
             if (comprobarRondas.length === 2) {
                 torneo.playRound(listaJugando);
@@ -281,24 +272,13 @@ ${formatear.join('\n')}`);
                     if (item.rondasGanadas === rondasNecesarias) {
                         console.log(`#################### ¡${item.nombre} ha ganado el JUEGO! ####################`)
                         item.juegosGanados++;
-
-                        /* if (player1.rondasGanadas === rondasNecesarias) {
-                            torneo.updateScoreboard(player1, player2);
-                        } else if (player2.rondasGanadas === rondasNecesarias) {
-                            torneo.updateScoreboard(player2, player1);
-                        }; */
                         torneo.getRoundScore();
 
-                        rondasNecesarias = 4;
                         torneo.reasignarValor(player1, 'rondasGanadas')
                         torneo.reasignarValor(player2, 'rondasGanadas')
                         salir = true;
                     };
                 });
-            };
-            if ((player1.rondasGanadas < 7 && player1.rondasGanadas >= rondasNecesarias && player1.rondasGanadas - player2.rondasGanadas === 1) ||
-                (player2.rondasGanadas < 7 && player2.rondasGanadas >= rondasNecesarias && player2.rondasGanadas - player1.rondasGanadas === 1)) {
-                rondasNecesarias++;
             };
         };
     },
@@ -329,25 +309,43 @@ ${formatear.join('\n')}`);
                         torneo.getRoundScore();
                         torneo.reasignarValor(item, 'juegosGanados')
                         //torneo.reasignarValor(item, 'juegosGanados')
-                        salir = true
+                        winner = item.nombre;
+                        salir = true;
                     };
                 });
             };
         }
+    },
+
+    getWinner: () => {
+        return winner;
     }
 };
 
-const game = torneo;
+let exit = false;
 
-console.log(game);
+while (!exit) {
+    const game1 = torneo;
+    const game2 = torneo;
+    const final = torneo;
 
-game.createMatch('Alberto C', 'David J');
+    game1.createMatch('Alberto C', 'David J');
+    game1.playMatch(game1.parejaJugando);
+    console.log(`
+    El ganador de la PRIMERA SEMIFINAL es -------------------------------->: 
+    ${game1.getWinner()}
+    `);
+    exit = true;
+
+};
+
+
 //game.asignarRivalIndex(torneo.parejaJugando[0], torneo.parejaJugando[1])
 
 //game.getRoundScore();
-console.log(game.rondaIsDeuce);
+/* console.log(game.rondaIsDeuce);
 console.log(game.comprobarDeuce(torneo.parejaJugando));
-//game.playJuego(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre);
+//game.playJuego(torneo.parejaJugando[0].nombre, torneo.parejaJugando[1].nombre); */
 
 
 
