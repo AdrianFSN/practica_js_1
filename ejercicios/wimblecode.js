@@ -87,6 +87,8 @@ const torneo = {
         };
     },
 
+    flagTraducirDeuce: false,
+
     traducirPuntos: (tanteo) => {
         if (tanteo === 0) {
             return '0';
@@ -97,13 +99,30 @@ const torneo = {
         } else if (tanteo === 3) {
             return '40';
         } else if (tanteo === 4) {
-            if (torneo.rondaIsDeuce) {
+            if (torneo.flagTraducirDeuce) {
                 return 'Ventaja'
             } else {
                 return 'RONDA GANADA'
-            };
+            }
         } else if (tanteo === 5) {
-            return 'RONDA GANADA';
+            torneo.flagTraducirDeuce = false;
+            return 'RONDA GANADA'
+        }
+    },
+
+    traducirPuntosDeuce: (tanteo) => {
+        if (tanteo === 0) {
+            return '0';
+        } else if (tanteo === 1) {
+            return '15';
+        } else if (tanteo === 2) {
+            return '30';
+        } else if (tanteo === 3) {
+            return '40';
+        } else if (tanteo === 4) {
+            return 'Ventaja'
+        } else if (tanteo === 5) {
+            return 'RONDA GANADA DESDE DEUCE'
         }
     },
 
@@ -174,27 +193,22 @@ ${formatear.join('\n')}`);
 
             if (torneo.comprobarDeuce(listaJugando)) {
                 while (player1.totalPuntos !== 5 && player2.totalPuntos !== 5) {
+                    torneo.flagTraducirDeuce = true;
+
                     if (player1.totalPuntos === 4 && player2.totalPuntos === 4) {
-                        console.log('ESTOY EN VENTAJA VENTAJA')
                         player1.totalPuntos--;
                         player2.totalPuntos--;
-                        console.log(' Puntos de player 1 tras ventaja ventaja: ', player1.totalPuntos)
-                        console.log(' Puntos de player 2tras ventaja ventaja: ', player2.totalPuntos)
+                        torneo.reasignarValor(player1, 'evolucionPuntos', '40');
+                        torneo.reasignarValor(player2, 'evolucionPuntos', '40');
                     };
-                    console.log(' Puntos de player 1: ', player1.totalPuntos)
-                    console.log(' Puntos de player 2: ', player2.totalPuntos)
                     torneo.pointWonBy();
-                    torneo.comprobarDeuce(listaJugando);
-                    torneo.getCurrentRoundScore();
-                    console.log('QUIERO SALIR DEL BUCLE DEUCE')
+                    torneo.getCurrentRoundScore()
 
                 }
 
-                console.log('HE SALIDO DEL BUCLE DEUCE');
                 torneo.parejaJugando.forEach(item => {
                     if (item.totalPuntos === 5) {
                         console.log(`¡Ronda ganada por ${item.nombre}!`);
-                        //torneo.getCurrentRoundScore();
                         item.rondasGanadas++;
 
                         if (player1.totalPuntos === 5) {
@@ -214,15 +228,13 @@ ${formatear.join('\n')}`);
                     };
 
                 });
-
-                //endRound = true;
             }
 
             else {
                 torneo.parejaJugando.forEach(item => {
                     if (item.totalPuntos === 4) {
                         console.log(`¡Ronda ganada por ${item.nombre}!`);
-                        //torneo.getCurrentRoundScore();
+
                         item.rondasGanadas++;
 
                         if (player1.totalPuntos === 4) {
