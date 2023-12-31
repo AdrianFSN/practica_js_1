@@ -249,7 +249,7 @@ ${formatear.join('\n')}`);
                             torneo.reasignarValor(jugador, 'totalPuntos');
                             torneo.reasignarValor(jugador, 'evolucionPuntos', '0');
                         })
-                        console.log(torneo.parejaJugando);
+                        //console.log(torneo.parejaJugando);
                         endRound = true;
                     };
 
@@ -279,20 +279,20 @@ ${formatear.join('\n')}`);
             } else {
                 listaJugando.forEach(item => {
                     if (item.rondasGanadas === rondasNecesarias) {
-                        console.log(`¡${item.nombre} ha ganado el JUEGO!`)
+                        console.log(`#################### ¡${item.nombre} ha ganado el JUEGO! ####################`)
                         item.juegosGanados++;
 
+                        torneo.getRoundScore();
                         if (player1.rondasGanadas === rondasNecesarias) {
                             torneo.updateScoreboard(player1, player2);
                         } else if (player2.rondasGanadas === rondasNecesarias) {
                             torneo.updateScoreboard(player2, player1);
                         };
 
-                        torneo.getRoundScore();
                         rondasNecesarias = 4;
-                        torneo.reasignarValor(item, 'rondasGanadas')
-                        console.log(comprobarRondas.length);
-                        salir = true
+                        torneo.reasignarValor(player1, 'rondasGanadas')
+                        torneo.reasignarValor(player2, 'rondasGanadas')
+                        salir = true;
                     };
                 });
             };
@@ -318,11 +318,11 @@ ${formatear.join('\n')}`);
             } else {
                 listaJugando.forEach(item => {
                     if (item.juegosGanados === juegosNecesarios) {
-                        console.log(`¡${item.nombre} ha ganado el PARTIDO!`)
+                        console.log(`******************** ¡${item.nombre} ha ganado el PARTIDO! ********************`)
 
                         if (player1.juegosGanados === juegosNecesarios) {
                             torneo.updateScoreboard(player1, player2);
-                        } else if (player2.juegosNecesarios === juegosNecesarios) {
+                        } else if (player2.juegosGanados === juegosNecesarios) {
                             torneo.updateScoreboard(player2, player1);
                         };
 
