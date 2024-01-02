@@ -216,7 +216,7 @@ ${formatear.join('\n')}`);
 
                 torneo.parejaJugando.forEach(item => {
                     if (item.totalPuntos === 5) {
-                        console.log(`¡Ronda ganada por ${item.nombre}!`);
+                        console.log(`<------------------ ¡Ronda ganada por ${item.nombre}! ------------------>`);
                         item.rondasGanadas++;
 
                         if (player1.totalPuntos === 5) {
@@ -240,7 +240,7 @@ ${formatear.join('\n')}`);
             else {
                 torneo.parejaJugando.forEach(item => {
                     if (item.totalPuntos === 4) {
-                        console.log(`¡Ronda ganada por ${item.nombre}!`);
+                        console.log(`<------------------ ¡Ronda ganada por ${item.nombre}! ------------------>`);
 
                         item.rondasGanadas++;
 
@@ -261,8 +261,8 @@ ${formatear.join('\n')}`);
 
                 });
 
-            }
-        }
+            };
+        };
 
 
     },

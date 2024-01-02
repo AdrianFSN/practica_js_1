@@ -1,0 +1,2 @@
+# Winblecode
+El código carga los settings para jugar un torneo automático. Después de <i> inscribir </i> a los jugadores a través del prompt. Se jugarán dos semifinales y la final a toda velocidad. Para ver el desarrollo de todos los partidos, hay que hacer <i>scroll</i> hacia arriba del todo.
