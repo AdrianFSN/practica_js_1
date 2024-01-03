@@ -62,9 +62,12 @@ const torneo = {
     parejaJugando: undefined,
     rondaIsDeuce: false,
     winner: '',
+    loser: '',
     createMatch: (nombre1, nombre2) => {
-        const rivalA = Object.assign({}, jugador);
-        const rivalB = Object.assign({}, jugador);
+        const rivalA = structuredClone(jugador);
+        const rivalB = structuredClone(jugador);
+        /* const rivalA = Object.assign({}, jugador);
+        const rivalB = Object.assign({}, jugador); */
 
         rivalA.nombre = nombre1;
         rivalA.id = 1;
@@ -73,11 +76,6 @@ const torneo = {
         torneo.parejaJugando = [rivalA, rivalB];
         return torneo.parejaJugando;
 
-    },
-
-    asignarRivalIndex: (listIndex1, listIndex2) => {
-        torneo.jugador1Index = listIndex1;
-        torneo.jugador2Index = listIndex2;
     },
 
     //= Math.floor(Math.random() * 2) + 1
@@ -327,10 +325,12 @@ ${formatear.join('\n')}`);
 
                         torneo.getRoundScore();
                         torneo.reasignarValor(item, 'juegosGanados')
-                        //torneo.reasignarValor(item, 'juegosGanados')
                         winner = item.nombre;
                         salir = true;
+                    } else if (item.juegosGanados !== juegosNecesarios) {
+                        loser = item.nombre;
                     };
+
                 });
             };
         }
@@ -338,6 +338,9 @@ ${formatear.join('\n')}`);
 
     getWinner: () => {
         return winner;
+    },
+    getLoser: () => {
+        return loser;
     }
 };
 
@@ -368,6 +371,9 @@ Partido 2: ${rivalC} vs. ${rivalD}`)
     const final = torneo;
 
     const clasificadosFinal = [];
+    const descalificados = [];
+
+    let marcadores = [];
 
     game1.createMatch(cuadroTorneo[0][0], cuadroTorneo[0][1]);
     game1.playMatch(game1.parejaJugando);
@@ -376,6 +382,7 @@ Partido 2: ${rivalC} vs. ${rivalD}`)
     ${game1.getWinner()}
     `);
     clasificadosFinal.push(game1.getWinner());
+    descalificados.push(game1.getLoser());
 
     game2.createMatch(cuadroTorneo[1][0], cuadroTorneo[1][1]);
     game2.playMatch(game2.parejaJugando);
@@ -384,14 +391,32 @@ Partido 2: ${rivalC} vs. ${rivalD}`)
     ${game2.getWinner()}
     `);
     clasificadosFinal.push(game2.getWinner());
+    descalificados.push(game2.getLoser());
 
 
 
     final.createMatch(clasificadosFinal[0], clasificadosFinal[1]);
     final.playMatch(final.parejaJugando);
+    clasificadosFinal.push(final.getWinner());
+    descalificados.push(final.getLoser());
     console.log(`
-    **********########## El ganador de la FINAL es **********##########: 
+    --------------------------- Semifinal 1 ---------------------------
+    
+    ${clasificadosFinal[0].toUpperCase()} ha ganado a ${descalificados[0]}
+
+    --------------------------- Semifinal 2 ---------------------------
+    
+    ${clasificadosFinal[1].toUpperCase()} ha ganado a ${descalificados[1]}
+
+    --------------------------- Final ---------------------------
+    
+    ${clasificadosFinal[2].toUpperCase()} ha ganado a ${descalificados[2]}
+
+    **********########## El ganador del TORNEO es ##########**********: 
+
     ${final.getWinner().toUpperCase()}
+
+    (Sube el cursor al inicio para ver el desarrollo de todos los partidos)
     `);
 
 
